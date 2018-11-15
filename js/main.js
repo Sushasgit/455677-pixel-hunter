@@ -69,7 +69,7 @@ const goNext = (element, array) => {
   showScreen(array, screenNum.value(element));
 };
 
-const getNavBackButtons = (item, array) => {
+const handleButtonBack = (item, array) => {
   let buttonsBack = item.querySelector(`.back`);
   if (buttonsBack) {
     buttonsBack.addEventListener(`click`, () => {
@@ -78,7 +78,7 @@ const getNavBackButtons = (item, array) => {
   }
 };
 
-const handleNextGreeting = (item, array) => {
+const handleButtonNext = (item, array) => {
   const greetingNextButton = document.querySelector(`.greeting__continue`);
   if (greetingNextButton) {
     greetingNextButton.addEventListener(`click`, () => {
@@ -95,13 +95,11 @@ const showScreen = (array, index = 0) => {
     if (array[i] === array[index]) {
       const template = wrap(array[index]);
       mainContainer.appendChild(template);
-      getNavBackButtons(template, array);
-      handleNextGreeting(template, array);
+      handleButtonBack(template, array);
+      handleButtonNext(template, array);
     }
   }
 };
-
-showScreen(templates, 1);
 
 document.addEventListener(`keydown`, (event) => {
   switch (event.key) {
@@ -126,3 +124,4 @@ navArrowBack.addEventListener(`click`, () => {
   showScreen(templates, screenNum.value(templates));
 });
 
+showScreen(templates, 1);
