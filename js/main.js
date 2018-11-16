@@ -3,6 +3,7 @@
 const templates = document.querySelectorAll(`template`);
 const mainContainer = document.querySelector(`main`);
 const START_SCREEN = 1;
+const RULES_SCREEN = 2;
 
 const arrowMarkup = `
   <div class="arrows__wrap">
@@ -25,7 +26,6 @@ const arrowMarkup = `
 `;
 
 document.body.insertAdjacentHTML(`beforeend`, arrowMarkup);
-
 const navArrows = document.querySelectorAll(`.arrows__btn`);
 
 const screenNum = (function () {
@@ -34,10 +34,10 @@ const screenNum = (function () {
     privateCounter += val;
   };
   return {
-    showNext: () => {
+    setNext: () => {
       step(1);
     },
-    showPrevious: () => {
+    setPrevious: () => {
       step(-1);
     },
     getValue: (elements = []) => {
@@ -58,66 +58,64 @@ const wrap = (it) => {
   return shadow.cloneNode(true);
 };
 
+const recreatedTemplates = [...templates].map((item) => wrap(item));
+
 const goBack = (elements) => {
-  screenNum.showPrevious();
+  screenNum.setPrevious();
   showScreen(elements, screenNum.getValue(elements));
 };
 
 const goNext = (elements) => {
-  screenNum.showNext();
+  screenNum.setNext();
   showScreen(elements, screenNum.getValue(elements));
 };
 
 const handleButtonBack = (item, elements) => {
-  let buttonBack = item.querySelector(`.back`);
+  const buttonBack = item.querySelector(`.back`);
   if (buttonBack) {
     buttonBack.addEventListener(`click`, () => {
-      goBack(item, elements);
+      showScreen(elements, START_SCREEN);
     });
   }
 };
 
 const handleButtonNext = (item, elements) => {
-  const greetingNextButton = document.querySelector(`.greeting__continue`);
-  if (greetingNextButton) {
+  const greetingNextButton = item.querySelector(`.greeting__continue`);
+  if (greetingNextButton && item) {
     greetingNextButton.addEventListener(`click`, () => {
-      goNext(item, elements);
+      showScreen(elements, RULES_SCREEN);
     });
   }
 };
 
-const showScreen = (templatesArr, index = 0) => {
+const showScreen = (elements, index = 0) => {
   for (;mainContainer.firstChild;) {
     mainContainer.removeChild(mainContainer.firstChild);
   }
+  mainContainer.appendChild(elements[index]);
 
-  templatesArr.forEach((templateItem, templateIndex) => {
-    if (templateIndex === index) {
-      const template = wrap(templateItem);
-      mainContainer.appendChild(template);
-      handleButtonBack(template, templatesArr);
-      handleButtonNext(template, templatesArr);
-    }
-  });
+  handleButtonBack(elements[index], elements);
+  handleButtonNext(elements[index], elements);
 };
 
 document.addEventListener(`keydown`, (event) => {
   switch (event.key) {
     case `ArrowLeft`:
-      goBack(templates);
+      goBack(recreatedTemplates);
       break;
     case `ArrowRight`:
-      goNext(templates);
+      goNext(recreatedTemplates);
       break;
   }
 });
 
 navArrows[0].addEventListener(`click`, () => {
-  goNext(templates);
+  goBack(recreatedTemplates);
 });
 
 navArrows[1].addEventListener(`click`, () => {
-  goBack(templates);
+  goNext(recreatedTemplates);
 });
 
-showScreen(templates, START_SCREEN);
+showScreen(recreatedTemplates, START_SCREEN);
+
