@@ -2,6 +2,7 @@
 
 const templates = document.querySelectorAll(`template`);
 const mainContainer = document.querySelector(`main`);
+const START_SCREEN = 1;
 
 const arrowMarkup = `
   <div class="arrows__wrap">
@@ -25,14 +26,13 @@ const arrowMarkup = `
 
 document.body.insertAdjacentHTML(`beforeend`, arrowMarkup);
 
-const navArrowBack = document.querySelectorAll(`.arrows__btn`)[0];
-const navArrowNext = document.querySelectorAll(`.arrows__btn`)[1];
+const navArrows = document.querySelectorAll(`.arrows__btn`);
 
 const screenNum = (function () {
-  let privateCounter = 0;
-  function step(val) {
+  let privateCounter = 1;
+  const step = (val) => {
     privateCounter += val;
-  }
+  };
   return {
     showNext: () => {
       step(1);
@@ -40,10 +40,10 @@ const screenNum = (function () {
     showPrevious: () => {
       step(-1);
     },
-    getValue: (array = []) => {
+    getValue: (elements = []) => {
       if (privateCounter < 0) {
-        privateCounter = array.length - 1;
-      } else if (privateCounter > array.length - 1) {
+        privateCounter = elements.length - 1;
+      } else if (privateCounter > elements.length - 1) {
         privateCounter = 0;
       }
       return privateCounter;
@@ -58,70 +58,66 @@ const wrap = (it) => {
   return shadow.cloneNode(true);
 };
 
-
-const goBack = (element, array) => {
+const goBack = (elements) => {
   screenNum.showPrevious();
-  showScreen(array, screenNum.getValue(element));
+  showScreen(elements, screenNum.getValue(elements));
 };
 
-const goNext = (element, array) => {
+const goNext = (elements) => {
   screenNum.showNext();
-  showScreen(array, screenNum.getValue(element));
+  showScreen(elements, screenNum.getValue(elements));
 };
 
-const handleButtonBack = (item, array) => {
-  let buttonsBack = item.querySelector(`.back`);
-  if (buttonsBack) {
-    buttonsBack.addEventListener(`click`, () => {
-      goBack(item, array);
+const handleButtonBack = (item, elements) => {
+  let buttonBack = item.querySelector(`.back`);
+  if (buttonBack) {
+    buttonBack.addEventListener(`click`, () => {
+      goBack(item, elements);
     });
   }
 };
 
-const handleButtonNext = (item, array) => {
+const handleButtonNext = (item, elements) => {
   const greetingNextButton = document.querySelector(`.greeting__continue`);
   if (greetingNextButton) {
     greetingNextButton.addEventListener(`click`, () => {
-      goNext(item, array);
+      goNext(item, elements);
     });
   }
 };
 
-const showScreen = (array, index = 0) => {
+const showScreen = (templatesArr, index = 0) => {
   for (;mainContainer.firstChild;) {
     mainContainer.removeChild(mainContainer.firstChild);
   }
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === array[index]) {
-      const template = wrap(array[index]);
+
+  templatesArr.forEach((templateItem, templateIndex) => {
+    if (templateIndex === index) {
+      const template = wrap(templateItem);
       mainContainer.appendChild(template);
-      handleButtonBack(template, array);
-      handleButtonNext(template, array);
+      handleButtonBack(template, templatesArr);
+      handleButtonNext(template, templatesArr);
     }
-  }
+  });
 };
 
 document.addEventListener(`keydown`, (event) => {
   switch (event.key) {
     case `ArrowLeft`:
-      screenNum.showPrevious();
-      showScreen(templates, screenNum.getValue(templates));
+      goBack(templates);
       break;
     case `ArrowRight`:
-      screenNum.showNext();
-      showScreen(templates, screenNum.getValue(templates));
+      goNext(templates);
       break;
   }
 });
 
-navArrowNext.addEventListener(`click`, () => {
-  screenNum.showNext();
-  showScreen(templates, screenNum.getValue(templates));
+navArrows[0].addEventListener(`click`, () => {
+  goNext(templates);
 });
 
-navArrowBack.addEventListener(`click`, () => {
-  screenNum.showPrevious();
-  showScreen(templates, screenNum.getValue(templates));
+navArrows[1].addEventListener(`click`, () => {
+  goBack(templates);
 });
 
-showScreen(templates, 1);
+showScreen(templates, START_SCREEN);
