@@ -1,7 +1,7 @@
 'use strict';
 
-const templates = document.getElementsByTagName(`template`);
-const mainContainer = document.getElementById(`main`);
+const templates = document.querySelectorAll(`template`);
+const mainContainer = document.querySelector(`main`);
 
 const arrowMarkup = `
   <div class="arrows__wrap">
@@ -28,19 +28,19 @@ document.body.insertAdjacentHTML(`beforeend`, arrowMarkup);
 const navArrowBack = document.querySelectorAll(`.arrows__btn`)[0];
 const navArrowNext = document.querySelectorAll(`.arrows__btn`)[1];
 
-const screenNum = (() => {
+const screenNum = (function () {
   let privateCounter = 0;
   function step(val) {
     privateCounter += val;
   }
   return {
-    nextScreen: () => {
+    showNext: () => {
       step(1);
     },
-    previousScreen: () => {
+    showPrevious: () => {
       step(-1);
     },
-    value: (array = []) => {
+    getValue: (array = []) => {
       if (privateCounter < 0) {
         privateCounter = array.length - 1;
       } else if (privateCounter > array.length - 1) {
@@ -60,13 +60,13 @@ const wrap = (it) => {
 
 
 const goBack = (element, array) => {
-  screenNum.previousScreen();
-  showScreen(array, screenNum.value(element));
+  screenNum.showPrevious();
+  showScreen(array, screenNum.getValue(element));
 };
 
 const goNext = (element, array) => {
-  screenNum.nextScreen();
-  showScreen(array, screenNum.value(element));
+  screenNum.showNext();
+  showScreen(array, screenNum.getValue(element));
 };
 
 const handleButtonBack = (item, array) => {
@@ -104,24 +104,24 @@ const showScreen = (array, index = 0) => {
 document.addEventListener(`keydown`, (event) => {
   switch (event.key) {
     case `ArrowLeft`:
-      screenNum.previousScreen();
-      showScreen(templates, screenNum.value(templates));
+      screenNum.showPrevious();
+      showScreen(templates, screenNum.getValue(templates));
       break;
     case `ArrowRight`:
-      screenNum.nextScreen();
-      showScreen(templates, screenNum.value(templates));
+      screenNum.showNext();
+      showScreen(templates, screenNum.getValue(templates));
       break;
   }
 });
 
 navArrowNext.addEventListener(`click`, () => {
-  screenNum.nextScreen();
-  showScreen(templates, screenNum.value(templates));
+  screenNum.showNext();
+  showScreen(templates, screenNum.getValue(templates));
 });
 
 navArrowBack.addEventListener(`click`, () => {
-  screenNum.previousScreen();
-  showScreen(templates, screenNum.value(templates));
+  screenNum.showPrevious();
+  showScreen(templates, screenNum.getValue(templates));
 });
 
 showScreen(templates, 1);
