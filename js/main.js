@@ -1,5 +1,3 @@
-'use strict';
-
 const templates = document.querySelectorAll(`template`);
 const mainContainer = document.querySelector(`main`);
 const START_SCREEN = 1;
