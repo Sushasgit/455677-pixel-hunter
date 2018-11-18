@@ -1,11 +1,9 @@
-import {render} from '../utils';
+import {render, changeScreen} from '../utils';
 
-import {changeScreen} from '../utils.js';
 import secondGameScreen from './game-screen-2.js';
 import greetingScreen from './greeting.js';
 
 const template = `
-<div id="game-1">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -61,26 +59,18 @@ const template = `
       <li class="stats__result stats__result--unknown"></li>
       <li class="stats__result stats__result--unknown"></li>
     </ul>
-  </section>
-</div>`;
+  </section>`;
 
 const element = render(template);
 
-const radiosFirstQuestion = element.querySelectorAll(`input[name="question1"]`);
-const secondQuestion = element.querySelectorAll(`input[name="question2"]`);
+const radiosButtons = element.querySelectorAll(`input[type="radio"]`);
 const goBackBtn = element.querySelector(`.back`);
 const FIRST_QUESTION = `question1`;
 const SECOND_QUESTION = `question2`;
 
-let answers = {};
+const answers = {};
 
-radiosFirstQuestion.forEach((radio) => {
-  radio.addEventListener(`change`, () => {
-    saveAnswers(radio.name, radio.value);
-  });
-});
-
-secondQuestion.forEach((radio) => {
+radiosButtons.forEach((radio) => {
   radio.addEventListener(`change`, () => {
     saveAnswers(radio.name, radio.value);
   });

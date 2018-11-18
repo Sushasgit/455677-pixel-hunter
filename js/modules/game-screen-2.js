@@ -1,11 +1,9 @@
-import {render} from '../utils';
+import {render, changeScreen} from '../utils';
 
-import {changeScreen} from '../utils.js';
 import thirdGameScreen from './game-screen-3';
 import greetingScreen from './greeting.js';
 
 const template = `
-<div id="game-2">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -50,16 +48,14 @@ const template = `
       <li class="stats__result stats__result--fast"></li>
       <li class="stats__result stats__result--unknown"></li>
     </ul>
-  </section>
-</div>
-`;
+  </section>`;
 
 const element = render(template);
 
-const answerBtn = element.querySelectorAll(`.game__answer`);
+const answerButtons = element.querySelectorAll(`.game__answer`);
 const goBackBtn = element.querySelector(`.back`);
 
-answerBtn.forEach((radio) => {
+answerButtons.forEach((radio) => {
   radio.addEventListener(`click`, () => {
     changeScreen(thirdGameScreen);
   });

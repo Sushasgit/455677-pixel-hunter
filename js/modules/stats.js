@@ -1,11 +1,8 @@
-import {render} from '../utils';
-
-import {changeScreen} from '../utils.js';
+import {render, changeScreen} from '../utils';
 
 import greetingScreen from './greeting.js';
 
 const template = `
-<div id="stats">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -116,8 +113,7 @@ const template = `
         <td colspan="5" class="result__total  result__total--final">950</td>
       </tr>
     </table>
-  </section>
-</div>`;
+  </section>`;
 
 const element = render(template);
 

@@ -1,10 +1,8 @@
-import {render} from '../utils';
+import {render, changeScreen} from '../utils';
 
-import {changeScreen} from '../utils.js';
 import rulesScreen from './rules.js';
 
 const template = `
-<div id="greeting">
   <section class="greeting central--blur">
     <img 
         class="greeting__logo" 
@@ -37,8 +35,7 @@ const template = `
             <use xlink:href="img/sprite.svg#arrow-right"></use>
         </svg>
     </button>
-  </section>
-</div>`;
+  </section>`;
 
 const element = render(template);
 

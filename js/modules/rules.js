@@ -1,11 +1,9 @@
-import {render} from '../utils';
+import {render, changeScreen} from '../utils';
 
-import {changeScreen} from '../utils.js';
 import firstGameScreen from './game-screen-1.js';
 import greetingScreen from './greeting.js';
 
 const template = `
-<div id="rules">
     <header class="header">
         <button class="back">
         <span class="visually-hidden">Вернуться к началу</span>
@@ -34,8 +32,7 @@ const template = `
                 Go!
             </button>
         </form>
-    </section>
-</div>`;
+    </section>`;
 
 const element = render(template);
 
@@ -45,11 +42,7 @@ const ruleForm = element.querySelector(`.rules__form`);
 const goBackBtn = element.querySelector(`.back`);
 
 inputName.addEventListener(`keyup`, () =>{
-  if (!inputName.value) {
-    playBtn.disabled = true;
-  } else {
-    playBtn.disabled = false;
-  }
+  playBtn.disabled = !inputName.value;
 });
 
 const onSubmit = () => {
