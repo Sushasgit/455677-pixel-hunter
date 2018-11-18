@@ -1,4 +1,6 @@
 import {render} from '../utils';
+import {changeScreen} from '../utils.js';
+import greetingScreen from './greeting.js';
 
 const template = `
 <div id="intro">
@@ -14,5 +16,11 @@ const template = `
 </div>`;
 
 const element = render(template);
+
+const asteriskBtn = element.querySelector(`.intro__asterisk`);
+
+asteriskBtn.addEventListener(`click`, () => {
+  changeScreen(greetingScreen);
+});
 
 export default element;

@@ -1,5 +1,9 @@
 import {render} from '../utils';
 
+import {changeScreen} from '../utils.js';
+import secondGameScreen from './game-screen-2.js';
+import greetingScreen from './greeting.js';
+
 const template = `
 <div id="game-1">
   <header class="header">
@@ -61,5 +65,37 @@ const template = `
 </div>`;
 
 const element = render(template);
+
+const radiosFirstQuestion = element.querySelectorAll(`input[name="question1"]`);
+const secondQuestion = element.querySelectorAll(`input[name="question2"]`);
+const goBackBtn = element.querySelector(`.back`);
+const FIRST_QUESTION = `question1`;
+const SECOND_QUESTION = `question2`;
+
+let answers = {};
+
+radiosFirstQuestion.forEach((radio) => {
+  radio.addEventListener(`change`, () => {
+    saveAnswers(radio.name, radio.value);
+  });
+});
+
+secondQuestion.forEach((radio) => {
+  radio.addEventListener(`change`, () => {
+    saveAnswers(radio.name, radio.value);
+  });
+});
+
+const saveAnswers = (answerGroup, answer) => {
+  answers[answerGroup] = answer;
+  if (answers.hasOwnProperty(FIRST_QUESTION) && answers.hasOwnProperty(SECOND_QUESTION)) {
+    changeScreen(secondGameScreen);
+  }
+  return answers;
+};
+
+goBackBtn.addEventListener(`click`, () => {
+  changeScreen(greetingScreen);
+});
 
 export default element;

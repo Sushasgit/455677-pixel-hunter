@@ -1,6 +1,11 @@
 
 import {render} from '../utils';
 
+import {changeScreen} from '../utils';
+
+import statistics from './stats.js';
+import greetingScreen from './greeting.js';
+
 const template = `
 <div id="game-3">
   <header class="header">
@@ -50,6 +55,19 @@ const template = `
 `;
 
 const element = render(template);
+
+const options = element.querySelectorAll(`.game__option`);
+const goBackBtn = element.querySelector(`.back`);
+
+options.forEach((radio) => {
+  radio.addEventListener(`click`, () => {
+    changeScreen(statistics);
+  });
+});
+
+goBackBtn.addEventListener(`click`, () => {
+  changeScreen(greetingScreen);
+});
 
 export default element;
 

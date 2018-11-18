@@ -1,5 +1,9 @@
 import {render} from '../utils';
 
+import {changeScreen} from '../utils.js';
+import firstGameScreen from './game-screen-1.js';
+import greetingScreen from './greeting.js';
+
 const template = `
 <div id="rules">
     <header class="header">
@@ -25,12 +29,37 @@ const template = `
         </ul>
         <p class="rules__ready">Готовы?</p>
         <form class="rules__form">
-        <input class="rules__input" type="text" placeholder="Ваше Имя">
-        <button class="rules__button  continue" type="submit" disabled>Go!</button>
+            <input class="rules__input" type="text" placeholder="Ваше Имя">
+            <button class="rules__button  continue" type="submit" disabled>
+                Go!
+            </button>
         </form>
     </section>
 </div>`;
 
 const element = render(template);
+
+const playBtn = element.querySelector(`.rules__button`);
+const inputName = element.querySelector(`.rules__input`);
+const ruleForm = element.querySelector(`.rules__form`);
+const goBackBtn = element.querySelector(`.back`);
+
+inputName.addEventListener(`keyup`, () =>{
+  if (!inputName.value) {
+    playBtn.disabled = true;
+  } else {
+    playBtn.disabled = false;
+  }
+});
+
+const onSubmit = () => {
+  changeScreen(firstGameScreen);
+};
+
+ruleForm.addEventListener(`submit`, onSubmit);
+
+goBackBtn.addEventListener(`click`, () => {
+  changeScreen(greetingScreen);
+});
 
 export default element;

@@ -1,7 +1,11 @@
 import {render} from '../utils';
 
+import {changeScreen} from '../utils.js';
+
+import greetingScreen from './greeting.js';
+
 const template = `
-<template id="stats">
+<div id="stats">
   <header class="header">
     <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
@@ -113,8 +117,14 @@ const template = `
       </tr>
     </table>
   </section>
-</template>`;
+</div>`;
 
 const element = render(template);
+
+const goBackBtn = element.querySelector(`.back`);
+
+goBackBtn.addEventListener(`click`, () => {
+  changeScreen(greetingScreen);
+});
 
 export default element;
