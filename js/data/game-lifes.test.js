@@ -9,5 +9,6 @@ describe(`Check lives`, () => {
     assert.equal(handleLivesGame(INITIAL_GAME, INITIAL_GAME.answers[0], -1), -1);
     assert.equal(handleLivesGame(INITIAL_GAME, INITIAL_GAME.answers[2], 2), -1);
     assert.equal(handleLivesGame(INITIAL_GAME, INITIAL_GAME.answers[0], 0), -1);
+    assert.isObject(handleLivesGame(INITIAL_GAME, INITIAL_GAME.answers[0], 2));
   });
 });

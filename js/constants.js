@@ -1,57 +1,59 @@
-export const FAST_ANSWER = `fast`;
-export const NORMAL_ANSWER = `normal`;
-export const SLOW_ANSWER = `slow`;
+export const Answer = {
+  FAST: `fast`,
+  NORMAL: `normal`,
+  SLOW: `slow`,
+};
 
 export const ANSWER_TIME = 30;
 
 export const INITIAL_GAME = Object.freeze({
   answers: [
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: false,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: false,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
     {
-      time: NORMAL_ANSWER,
+      time: Answer.NORMAL,
       right: true,
     },
   ],
