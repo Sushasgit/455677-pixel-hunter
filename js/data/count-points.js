@@ -1,12 +1,21 @@
-// import {Answer} from '../constants.js';
-//   const gameResult;
 
-// export const countPoints = (answers, remainingLives) => {
-//   const fastAnswers = answers.filter((answer) => answer.right && answer.time === Answer.FAST).length;
-//   const usualAnswers = answers.filter((answer) => answer.right && answer.time === Answer.NORMAL).length;
-//   const slowAnswers = answers.filter((answer) => answer.right && answer.time === Answer.SLOW).length;
+import {Answer, MAX_FAILED_ANSWERS} from '../constants.js';
 
-//   answers.length < 10 ? -1 :return(fastAnswers * 150) + (usualAnswers * 100) + (slowAnswers * 50) + (remainingLives * 50)
+export const countPoints = (answers, remainingLives) => {
+  const countAnswers = answers.reduce((prev, current) => {
+    prev[current.time]++;
+    return prev;
+  }, {
+    [Answer.SLOW.title]: 0,
+    [Answer.NORMAL.title]: 0,
+    [Answer.FAST.title]: 0
+  });
 
-// };
-
+  const gameResult = answers.length < MAX_FAILED_ANSWERS
+    ? -1
+    : Object.keys(Answer).forEach((element) => {
+      let el = element.toLowerCase();
+      return countAnswers[el] * Answer[element].points + remainingLives * 50;
+    });
+  return gameResult;
+};
