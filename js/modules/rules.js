@@ -4,7 +4,7 @@ import firstGameScreen from './game-screen-1.js';
 import greetingScreen from './greeting.js';
 import header from './header';
 
-const template = `
+const rules = render(`
     ${header()}
     <section class="rules">
         <h2 class="rules__title">Правила</h2>
@@ -23,14 +23,12 @@ const template = `
                 Go!
             </button>
         </form>
-    </section>`;
+    </section>`);
 
-const element = render(template);
-
-const playBtn = element.querySelector(`.rules__button`);
-const inputName = element.querySelector(`.rules__input`);
-const ruleForm = element.querySelector(`.rules__form`);
-const goBackBtn = element.querySelector(`.back`);
+const playBtn = rules.querySelector(`.rules__button`);
+const inputName = rules.querySelector(`.rules__input`);
+const ruleForm = rules.querySelector(`.rules__form`);
+const goBackBtn = rules.querySelector(`.back`);
 
 inputName.addEventListener(`keyup`, () =>{
   playBtn.disabled = !inputName.value;
@@ -46,4 +44,4 @@ goBackBtn.addEventListener(`click`, () => {
   changeScreen(greetingScreen);
 });
 
-export default element;
+export default rules;
