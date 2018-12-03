@@ -1,5 +1,7 @@
+import {MAX_TIME} from '../constants.js';
+
 export default class Counter {
-  constructor(seconds = 30, element) {
+  constructor(seconds = MAX_TIME, element) {
     if (seconds <= 0) {
       throw new Error(`Seconds should not be negative or equal 0`);
     }

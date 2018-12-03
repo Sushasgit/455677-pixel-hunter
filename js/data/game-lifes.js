@@ -3,7 +3,7 @@ export const handleLivesGame = (game, answer, remainingLives) => {
     throw new Error(`Reemaining Lives should not be negative`);
   }
 
-  if (remainingLives < 0 || remainingLives > 3) {
+  if (remainingLives > 3) {
     throw new Error(`Reemaining Livesshould be from 0 to 3`);
   }
 
