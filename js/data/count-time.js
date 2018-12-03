@@ -1,5 +1,8 @@
 export default class Counter {
   constructor(seconds = 30, element) {
+    if (seconds <= 0) {
+      throw new Error(`Seconds should not be negative or equal 0`);
+    }
     this.seconds = seconds;
     this.element = element;
     this.counterContainer = null;
@@ -15,11 +18,10 @@ export default class Counter {
     if (this.seconds) {
       --this.seconds;
     }
-    this.counterContainer.innerHTML = this.seconds;
+    return this.seconds;
   }
 
   startCount() {
-    this.createCounterContainer();
     setInterval(() => this.updateCount(), 1000);
   }
 
