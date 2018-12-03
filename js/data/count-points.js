@@ -1,6 +1,7 @@
 import {Answer, MAX_FAILED_ANSWERS} from '../constants.js';
 
 export const countPoints = (answers, remainingLives) => {
+  let gameResult = 0;
   const countAnswers = answers.reduce((prev, current) => {
     prev[current.time]++;
     return prev;
@@ -10,11 +11,9 @@ export const countPoints = (answers, remainingLives) => {
     [Answer.FAST.title]: 0
   });
 
-  const gameResult = answers.length < MAX_FAILED_ANSWERS
-    ? -1
-    : Object.keys(Answer).forEach((element) => {
-      let el = element.toLowerCase()
-      return countAnswers[el] * Answer[element].points + remainingLives * 50;
-    });
+  Object.keys(Answer).forEach((element) => {
+    gameResult += countAnswers[element] * Answer[element].points;
+  });
+  gameResult = answers.length < MAX_FAILED_ANSWERS ? -1 : gameResult + remainingLives * 50;
   return gameResult;
 };

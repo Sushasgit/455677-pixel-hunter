@@ -5,7 +5,7 @@ export const Answer = {
     points: 150,
   },
   NORMAL: {
-    title: `NORNAL`,
+    title: `NORMAL`,
     time: 20,
     points: 100,
   },
