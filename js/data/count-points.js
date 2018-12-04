@@ -11,11 +11,9 @@ export const countPoints = (answers, remainingLives) => {
   });
 
   const points = Object.keys(Answer).reduce((prev, current) => {
-    let value = 0;
-    if (countAnswers.hasOwnProperty(current)) {
-      value = countAnswers[current] * Answer[current].points + prev;
-    }
-    return value;
+    return countAnswers.hasOwnProperty(current)
+      ? countAnswers[current] * Answer[current].points + prev
+      : 0;
   }, 0);
 
   let gameResult = answers.length < MIN_NEEDED_ANSWERS ? -1 : points + remainingLives * REMAINING_LIFE_SCORE;
