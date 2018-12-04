@@ -17,8 +17,8 @@ export const Answer = {
 };
 
 export const MAX_TIME = 30;
-export const MAX_FAILED_ANSWERS = 10;
-
+export const MIN_NEEDED_ANSWERS = 10;
+export const REMAINING_LIFE_SCORE = 50;
 export const ANSWER_TIME = 30;
 
 export const INITIAL_GAME = Object.freeze({
