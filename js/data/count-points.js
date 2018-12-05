@@ -1,5 +1,4 @@
-
-import {Answer, MAX_FAILED_ANSWERS} from '../constants.js';
+import {Answer, MIN_NEEDED_ANSWERS, REMAINING_LIFE_SCORE} from '../constants.js';
 
 export const countPoints = (answers, remainingLives) => {
   const countAnswers = answers.reduce((prev, current) => {
@@ -10,12 +9,12 @@ export const countPoints = (answers, remainingLives) => {
     [Answer.NORMAL.title]: 0,
     [Answer.FAST.title]: 0
   });
+  const points = Object.keys(Answer).reduce((prev, current) => {
+    return countAnswers.hasOwnProperty(current)
+      ? countAnswers[current] * Answer[current].points + prev
+      : 0;
+  }, 0);
 
-  const gameResult = answers.length < MAX_FAILED_ANSWERS
-    ? -1
-    : Object.keys(Answer).forEach((element) => {
-      let el = element.toLowerCase();
-      return countAnswers[el] * Answer[element].points + remainingLives * 50;
-    });
+  let gameResult = answers.length < MIN_NEEDED_ANSWERS ? -1 : points + remainingLives * REMAINING_LIFE_SCORE;
   return gameResult;
 };

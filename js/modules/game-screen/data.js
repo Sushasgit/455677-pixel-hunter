@@ -1,61 +1,116 @@
-module.exports = {
-  sinleQuestion: {
-    question: `Угадай, фото или рисунок`,
-    images: [
-      {
-        image: `https://k42.kn3.net/CF42609C8.jpg`,
-        rightAnswer: `painting`,
-        userAnswer: null,
-      },
 
-      {
-        image: `https://k42.kn3.net/D2F0370D6.jpg`,
-        rightAnswer: `painting`,
-        userAnswer: null,
-      },
+ export const images = [
+    {
+      id: 1,
+      image: `https://k42.kn3.net/CF42609C8.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
 
-      {
-        image: `https://k32.kn3.net/5C7060EC5.jpg`,
-        rightAnswer: `painting`,
-        userAnswer: null,
-      },
+    {
+      id: 2,
+      image: `https://k42.kn3.net/D2F0370D6.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
 
-      {
-        image: `http://i.imgur.com/1KegWPz.jpg`,
-        rightAnswer: `photo`,
-        userAnswer: null,
-      },
-    ]
-  },
+    {
+      id: 3,
+      image: `https://k32.kn3.net/5C7060EC5.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
 
-  twoImaesQuestion: {
-    question: `Угадайте для каждого изображения фото или рисунок?`,
-    images: [
-      {
-        firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-        secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-        rightAnswer: `painting`,
-        userAnswer: null,
-      },
-      {
-        firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-        secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-        rightAnswer: `painting`,
-        userAnswer: null,
-      },
-      {
-        firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-        secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-        rightAnswer: `painting`,
-        userAnswer: null,
-      },
+    {
+      id: 4,
+      image: `http://i.imgur.com/1KegWPz.jpg`,
+      rightAnswer: `photo`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `oneImage`,
+    },
 
-      {
-        firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-        secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-        rightAnswer: `photo`,
-        userAnswer: null,
-      },
-    ]
-  }
-};
+    {
+      id: 5,
+      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
+      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадайте для каждого изображения фото или рисунок?`,
+      type: `twoImage`,
+    },
+    {
+      id: 6,
+      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
+      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадайте для каждого изображения фото или рисунок?`,
+      type: `threeImage`,
+    },
+    {
+      id: 7,
+      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
+      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадайте для каждого изображения фото или рисунок?`,
+      type: `threeImage`,
+    },
+
+    {
+      id: 8,
+      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
+      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
+      rightAnswer: `photo`,
+      userAnswer: null,
+      question: `Угадайте для каждого изображения фото или рисунок?`,
+      type: `threeImage`,
+    },
+    {
+      id: 9,
+      image: `https://k42.kn3.net/CF42609C8.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
+    {
+      id: 10,
+      image: `https://k42.kn3.net/CF42609C8.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
+    {
+      id: 11,
+      image: `https://k42.kn3.net/CF42609C8.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
+    {
+      id: 12,
+      image: `https://k42.kn3.net/CF42609C8.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
+    {
+      id: 13,
+      image: `https://k42.kn3.net/CF42609C8.jpg`,
+      rightAnswer: `painting`,
+      userAnswer: null,
+      question: `Угадай, фото или рисунок`,
+      type: `threeImage`,
+    },
+  ]
