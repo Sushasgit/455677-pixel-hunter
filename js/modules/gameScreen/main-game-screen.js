@@ -1,13 +1,13 @@
 const mainElement = document.querySelector(`#main`);
-import {changeScreen, render} from '../utils.js';
-import {handleLivesGame} from '../data/game-lifes.js';
-import {Answer} from '../constants.js';
-import {images} from './gameScreen/data.js';
+import {changeScreen, render} from '../../utils.js';
+import {handleLivesGame} from '../../data/game-lifes.js';
+import {Answer} from '../../constants.js';
+import {images} from './data.js';
 
-import gameOneImage from './gameScreen/gameTemplates/gameOneImage.js';
-import gameTwoImages from './gameScreen/gameTemplates/gameTwoImages.js';
-import gameThreeImages from './gameScreen/gameTemplates/gameThreeImages.js';
-import stats from './stats.js';
+import gameOneImage from './gameTemplates/gameOneImage.js';
+import gameTwoImages from './gameTemplates/gameTwoImages.js';
+import gameThreeImages from './gameTemplates/gameThreeImages.js';
+import stats from '../stats.js';
 
 let INITIAL_GAME = {
   answers: [],
@@ -38,7 +38,7 @@ const renderQuestions = (questions) => {
 };
 
 const showQuestion = (n) => {
-  questionsArray[n].classList.add(`active-slide`);
+  questionsArray[n].classList.add(`active-question`);
 };
 
 const nextQuestion = (n) => {
@@ -46,7 +46,7 @@ const nextQuestion = (n) => {
     changeScreen(render(stats(INITIAL_GAME)));
   } else {
     showQuestion(n);
-    questionsArray[n - 1].classList.remove(`active-slide`);
+    questionsArray[n - 1].classList.remove(`active-question`);
   }
 };
 
@@ -55,20 +55,28 @@ const checkAnswer = (n, userAnswer) => {
     INITIAL_GAME.answers.push({
       n,
       time: Answer.NORMAL.time,
-      right: randomQuestionsArray[n].rightAnswer === userAnswer
+      type: Answer.NORMAL.title,
+      right: randomQuestionsArray[n].rightAnswer === userAnswer,
+      correctAnswer: randomQuestionsArray[n].rightAnswer,
+      userAnswer
     });
   } else {
     INITIAL_GAME.answers.push({
       n,
-      time: Answer.NORMAL.time,
+      time: Answer.SLOW.time,
+      type: Answer.NORMAL.title,
+      userAnswer,
+      correctAnswer: randomQuestionsArray[n].firstImage.rightAnswer,
       right: randomQuestionsArray[n].firstImage.rightAnswer === userAnswer[0].question1 && randomQuestionsArray[n].secondImage.rightAnswer === userAnswer[0].question2
     });
   }
 
   INITIAL_GAME = handleLivesGame(INITIAL_GAME, INITIAL_GAME.answers[n - 1], INITIAL_GAME.lives);
   if (!INITIAL_GAME.lives) {
-    changeScreen(render(stats(INITIAL_GAME)));
+    changeScreen(stats(INITIAL_GAME));
   }
+  // Для отладки праивтльного подсчета игры
+  console.table(INITIAL_GAME.answers); // eslint-disable-line Unexpected console statement
 };
 
 const handletypeofQuestion = (question) => {

@@ -13,4 +13,5 @@ const template = (content = ``) => (`
     ${content}
 </header>`
 );
+
 export default template;

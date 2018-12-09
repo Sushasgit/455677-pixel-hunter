@@ -1,7 +1,7 @@
 import {render, changeScreen} from '../utils';
 
-import firstGameScreen from './game-screen-1.js';
-import greetingScreen from './greeting.js';
+import firstGameScreen from './gameScreen/main-game-screen.js';
+// import greetingScreen from './greeting.js';
 import header from './header';
 
 const rules = render(`
@@ -28,7 +28,6 @@ const rules = render(`
 const playBtn = rules.querySelector(`.rules__button`);
 const inputName = rules.querySelector(`.rules__input`);
 const ruleForm = rules.querySelector(`.rules__form`);
-const goBackBtn = rules.querySelector(`.back`);
 
 inputName.addEventListener(`keyup`, () =>{
   playBtn.disabled = !inputName.value;
@@ -39,9 +38,5 @@ const onSubmit = () => {
 };
 
 ruleForm.addEventListener(`submit`, onSubmit);
-
-goBackBtn.addEventListener(`click`, () => {
-  changeScreen(greetingScreen);
-});
 
 export default rules;

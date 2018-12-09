@@ -11,7 +11,7 @@ export const Answer = {
   },
   SLOW: {
     title: `SLOW`,
-    time: 20,
+    time: 30,
     points: 50,
   }
 };

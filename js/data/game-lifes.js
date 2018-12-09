@@ -7,18 +7,12 @@ export const handleLivesGame = (game, answer, remainingLives) => {
   }
   if (!answer.right && remainingLives > 0) {
     remainingLives--;
-    console.log('remainingL--', answer.right, remainingLives)
   }
-  // if (remainingLives === 0) {
-  //   alert(`baaaad`);
-  //   const newGame = Object.assign({}, game, {
-  //     lives: remainingLives
-  //   });
-  // }
-    const newGame = Object.assign({}, game, {
-      lives: remainingLives
-    });
-  
-    return newGame;
-  
+
+  const newGame = Object.assign({}, game, {
+    lives: remainingLives,
+    failed: remainingLives ? false : true,
+  });
+
+  return newGame;
 };
