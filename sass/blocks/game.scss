@@ -6,10 +6,13 @@
 @import "../mixins/text";
 
 .game {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+.active-slide {
+  display: flex;
 }
 
 .game__timer {

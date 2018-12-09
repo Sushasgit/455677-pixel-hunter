@@ -1,9 +1,9 @@
 import {render, changeScreen} from '../utils';
 
-import greetingScreen from './greeting.js';
+// import greetingScreen from './greeting.js';
 import header from './header.js';
 
-const template = `
+const stats = (data) => `
   ${header()}
   <section class="result">
     <h2 class="result__title">Победа!</h2>
@@ -106,12 +106,11 @@ const template = `
     </table>
   </section>`;
 
-const element = render(template);
 
-const goBackBtn = element.querySelector(`.back`);
+// const goBackBtn = element.querySelector(`.back`);
 
-goBackBtn.addEventListener(`click`, () => {
-  changeScreen(greetingScreen);
-});
+// goBackBtn.addEventListener(`click`, () => {
+//   changeScreen(greetingScreen);
+// });
 
-export default element;
+export default stats;
