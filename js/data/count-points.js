@@ -1,7 +1,6 @@
 import {Answer, REMAINING_LIFE_SCORE} from '../constants.js';
 
 export const countPoints = (answers, remainingLives) => {
-  console.log('ANSWERS', answers)
   const countAnswers = answers.reduce((prev, current) => {
     prev[current.type]++;
     return prev;
@@ -10,8 +9,6 @@ export const countPoints = (answers, remainingLives) => {
     [Answer.NORMAL.title]: 0,
     [Answer.FAST.title]: 0
   });
-
-  console.log(countAnswers)
 
   const points = Object.keys(Answer).reduce((prev, current) => {
     return countAnswers.hasOwnProperty(current)
@@ -24,4 +21,5 @@ export const countPoints = (answers, remainingLives) => {
     gameResult,
     countAnswers,
   };
+
 };

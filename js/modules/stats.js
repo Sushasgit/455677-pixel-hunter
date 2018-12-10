@@ -1,12 +1,11 @@
 import {render} from '../utils';
 import {countPoints} from '../data/count-points.js';
-import header from './header';
+
 
 const stats = (data) => {
   const result = countPoints(data.answers, data.lives);
   const answers = result.countAnswers.FAST + result.countAnswers.NORMAL + result.countAnswers.SLOW;
   const statistics = `
-    ${header()}
   <section class="result">
   <h2 class="result__title">${data.failed ? `Fail` : `Победа!`}</h2>
   <table class="result__table">

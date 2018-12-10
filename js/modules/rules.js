@@ -1,11 +1,10 @@
 import {render, changeScreen} from '../utils';
-
+import header from './gameScreen/header-game/header.js';
 import firstGameScreen from './gameScreen/main-game-screen.js';
-// import greetingScreen from './greeting.js';
-import header from './header';
+import {INITIAL_GAME} from '../constants';
 
-const rules = render(`
-    ${header()}
+const rules = () => {
+  const template = `
     <section class="rules">
         <h2 class="rules__title">Правила</h2>
         <ul class="rules__description">
@@ -23,20 +22,25 @@ const rules = render(`
                 Go!
             </button>
         </form>
-    </section>`);
+    </section>`;
 
-const playBtn = rules.querySelector(`.rules__button`);
-const inputName = rules.querySelector(`.rules__input`);
-const ruleForm = rules.querySelector(`.rules__form`);
+  const element = render(template);
 
-inputName.addEventListener(`keyup`, () =>{
-  playBtn.disabled = !inputName.value;
-});
+  const playBtn = element.querySelector(`.rules__button`);
+  const inputName = element.querySelector(`.rules__input`);
+  const ruleForm = element.querySelector(`.rules__form`);
 
-const onSubmit = () => {
-  changeScreen(firstGameScreen);
+  inputName.addEventListener(`keyup`, () =>{
+    playBtn.disabled = !inputName.value;
+  });
+
+  const onSubmit = () => {
+    changeScreen(firstGameScreen);
+    header(INITIAL_GAME.lives);
+  };
+
+  ruleForm.addEventListener(`submit`, onSubmit);
+  return element;
 };
-
-ruleForm.addEventListener(`submit`, onSubmit);
 
 export default rules;

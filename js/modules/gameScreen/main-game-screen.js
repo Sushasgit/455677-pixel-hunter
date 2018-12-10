@@ -8,6 +8,7 @@ import gameOneImage from './gameTemplates/gameOneImage.js';
 import gameTwoImages from './gameTemplates/gameTwoImages.js';
 import gameThreeImages from './gameTemplates/gameThreeImages.js';
 import stats from '../stats.js';
+import header from './header-game/header.js';
 
 let INITIAL_GAME = {
   answers: [],
@@ -17,8 +18,10 @@ let INITIAL_GAME = {
 
 const getRandomQuestions = (questions) => {
   const shuffled = questions.sort(() => 0.5 - Math.random());
-  return shuffled.slice(1, 12);
+  return shuffled.slice(1, 11);
 };
+
+const randomQuestionsArray = getRandomQuestions(images);
 
 const renderQuestions = (questions) => {
   let output = [];
@@ -72,11 +75,11 @@ const checkAnswer = (n, userAnswer) => {
   }
 
   INITIAL_GAME = handleLivesGame(INITIAL_GAME, INITIAL_GAME.answers[n - 1], INITIAL_GAME.lives);
+
+  header(INITIAL_GAME.lives);
   if (!INITIAL_GAME.lives) {
     changeScreen(stats(INITIAL_GAME));
   }
-  // Для отладки праивтльного подсчета игры
-  console.table(INITIAL_GAME.answers); // eslint-disable-line Unexpected console statement
 };
 
 const handletypeofQuestion = (question) => {
@@ -91,10 +94,8 @@ const handletypeofQuestion = (question) => {
   return null;
 };
 
-const randomQuestionsArray = getRandomQuestions(images);
 const element = renderQuestions(randomQuestionsArray);
 const questionsArray = element.querySelectorAll(`.game`);
-
 showQuestion(INITIAL_GAME.level);
 
 export default element;

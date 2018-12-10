@@ -3,7 +3,8 @@ import {render} from '../../../utils';
 import {changeLevel} from '../../../data/change-level.js';
 
 const gameTwoImages = (question, nextQuestion, checkAnswer, game) => {
-  const template = `<section class="game">
+  const template = `
+  <section class="game">
   <p class="game__task">Найдите рисунок среди изображений</p>
   <form class="game__content  game__content--triple">
     <div data-type="paint" class="game__option game__threeImage">
@@ -23,10 +24,10 @@ const gameTwoImages = (question, nextQuestion, checkAnswer, game) => {
 
   gameThreeImage.forEach((radio) => {
     radio.addEventListener(`click`, () => {
-      nextQuestion(game.level);
       checkAnswer(game.level, radio.getAttribute(`data-type`));
       if (game) {
         changeLevel(game, game.level++);
+        nextQuestion(game.level);
       }
     });
   });

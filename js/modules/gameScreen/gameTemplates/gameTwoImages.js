@@ -5,7 +5,8 @@ const FIRST_QUESTION = `question1`;
 const SECOND_QUESTION = `question2`;
 
 const gameTwoImages = (questionTemplate, nextQuestion, checkAnswer, game) => {
-  const template = ` <section class="game">
+  const template = ` 
+  <section class="game">
   <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
   <form class="game__content">
     <div class="game__option game__twoImage">
@@ -49,12 +50,11 @@ const gameTwoImages = (questionTemplate, nextQuestion, checkAnswer, game) => {
     if (answer.hasOwnProperty(FIRST_QUESTION) && answer.hasOwnProperty(SECOND_QUESTION)) {
       answers.push(answer);
       checkAnswer(game.level, answers);
-      nextQuestion(game.level);
       changeLevel(game, game.level++);
+      nextQuestion(game.level);
     }
     return answers;
   };
-
   return element;
 };
 

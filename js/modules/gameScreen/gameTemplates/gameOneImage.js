@@ -20,15 +20,15 @@ const template = (data) => ` <section class="game">
 </section>`;
 
 const gameOneImage = (data, nextQuestion, checkAnswer, game) => {
-  const element = render(template(data));
+  const element = render(template(data, game));
   const answerButtons = element.querySelectorAll(`.game__oneImage input`);
 
   answerButtons.forEach((radio) => {
     radio.addEventListener(`click`, () => {
-      nextQuestion(game.level);
       checkAnswer(game.level, radio.value);
       if (game) {
         changeLevel(game, game.level++);
+        nextQuestion(game.level);
       }
     });
   });

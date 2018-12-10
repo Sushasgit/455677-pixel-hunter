@@ -1,7 +1,8 @@
 import {render, changeScreen} from '../utils';
 import greetingScreen from './greeting.js';
 
-const introduction = render(`
+const introduction = () => {
+  const template = `
   <section class="intro">
     <button class="intro__asterisk asterisk" type="button">
         <span class="visually-hidden">Продолжить</span>
@@ -10,14 +11,17 @@ const introduction = render(`
     <p class="intro__motto">
         <sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.
     </p>
-  </section>`
-);
+  </section>`;
 
-const asteriskBtn = introduction.querySelector(`.intro__asterisk`);
+  const element = render(template);
 
-asteriskBtn.addEventListener(`click`, () => {
-  changeScreen(greetingScreen);
-});
+  const asteriskBtn = element.querySelector(`.intro__asterisk`);
+
+  asteriskBtn.addEventListener(`click`, () => {
+    changeScreen(greetingScreen());
+  });
+  return element;
+};
 
 export default introduction;
 

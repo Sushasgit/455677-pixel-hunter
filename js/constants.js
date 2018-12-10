@@ -134,5 +134,6 @@ export const INITIAL_GAME = Object.freeze({
       right: true,
     },
   ],
-  lives: 0,
+  lives: 3,
+  level: 1,
 });

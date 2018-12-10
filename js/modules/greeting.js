@@ -2,8 +2,8 @@ import {render, changeScreen} from '../utils';
 
 import rulesScreen from './rules.js';
 
-const greeting = render(`
-  <section class="greeting central--blur">
+const greeting = () => {
+  const template = `<section class="greeting central--blur">
     <img 
         class="greeting__logo" 
         src="img/logo_ph-big.svg" 
@@ -35,12 +35,15 @@ const greeting = render(`
             <use xlink:href="img/sprite.svg#arrow-right"></use>
         </svg>
     </button>
-  </section>`);
+  </section>);`;
+  const element = render(template);
+  const continueBtn = element.querySelector(`.greeting__continue`);
 
-const continueBtn = greeting.querySelector(`.greeting__continue`);
+  continueBtn.addEventListener(`click`, () => {
+    changeScreen(rulesScreen());
+  });
 
-continueBtn.addEventListener(`click`, () => {
-  changeScreen(rulesScreen);
-});
+  return element;
+};
 
 export default greeting;
