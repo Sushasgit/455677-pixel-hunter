@@ -5,6 +5,7 @@ export const handleLivesGame = (game, answer, remainingLives) => {
   if (remainingLives > 3) {
     throw new Error(`Reemaining Livesshould be from 0 to 3`);
   }
+
   if (!answer.right && remainingLives > 0) {
     remainingLives--;
   }

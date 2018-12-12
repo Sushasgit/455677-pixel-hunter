@@ -15,6 +15,16 @@ export const Answer = {
     points: 50,
   }
 };
+export const QuestionType = {
+  TWO_OF_TWO: `two-of-two`,
+  TINDER_LIKE: `tinder-like`,
+  ONE_OF_THREE: `one-of-three`
+};
+
+export const AnswerType = {
+  PAINTING: `painting`,
+  PHOTO: `photo`,
+};
 
 export const sinleQuestion = {
   question: `Угадай, фото или рисунок`,
@@ -136,4 +146,5 @@ export const INITIAL_GAME = Object.freeze({
   ],
   lives: 3,
   level: 1,
+  failed: false,
 });
