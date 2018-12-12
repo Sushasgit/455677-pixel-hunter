@@ -5,9 +5,9 @@ export const changeLevel = (game, level) => {
   if (level < 0) {
     throw new Error(`Level should not be negative value`);
   }
-  if (level === 0) {
-    throw new Error(`Level should not be 0`);
-  }
+  // if (level === 0) {
+  //   throw new Error(`Level should not be 0`);
+  // }
   const newGame = Object.assign({}, game, {
     level
   });
