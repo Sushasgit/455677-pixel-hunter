@@ -35,7 +35,7 @@ const greeting = () => {
             <use xlink:href="img/sprite.svg#arrow-right"></use>
         </svg>
     </button>
-  </section>);`;
+  </section>`;
   const element = render(template);
   const continueBtn = element.querySelector(`.greeting__continue`);
 

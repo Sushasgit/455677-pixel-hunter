@@ -16,9 +16,9 @@ describe(`Check level changer`, () => {
     assert.throws(() => changeLevel(INITIAL_GAME, -1).level, /Level should not be negative value/);
   });
 
-  // it(`should not allow set 0`, () => {
-  //   assert.throws(() => changeLevel(INITIAL_GAME, 0).level, /Level should not be 0/);
-  // });
+  it(`should not allow set 0`, () => {
+    assert.throws(() => changeLevel(INITIAL_GAME, 0).level, /Level should not be 0/);
+  });
 
   it(`should not allow set non number value`, () => {
     assert.throws(() => changeLevel(INITIAL_GAME, NaN).level, /Level should be of type number/);

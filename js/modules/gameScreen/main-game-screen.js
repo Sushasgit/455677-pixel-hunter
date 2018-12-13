@@ -3,11 +3,13 @@ import {changeScreen} from '../../utils.js';
 import {handleLivesGame} from '../../data/game-lifes.js';
 import {changeLevel} from '../../data/change-level.js';
 import {Answer} from '../../constants.js';
-import {images} from './data.js';
+import {images} from '../../gameData.js';
 import gameOneImage from './gameTemplates/gameOneImage.js';
 import gameTwoImages from './gameTemplates/gameTwoImages.js';
 import gameThreeImages from './gameTemplates/gameThreeImages.js';
 import stats from '../stats.js';
+
+import header from './header-game/header.js';
 
 let startGame = {
   answers: [],
@@ -17,15 +19,11 @@ let startGame = {
   failed: false,
 };
 
-// TODO: need to create pure functions;
-// TODO: Header
-// TODO: List statistics
-
 export const updateGame = (game, element, twoAnswers) => {
   const {questions, level} = game;
-
+  header(game.lives);
   let userAnswer;
-  switch (questions[level].type) {
+  switch (questions[level - 1].type) {
     case `tinder-like`:
       userAnswer = {
         type: element.value
@@ -42,23 +40,25 @@ export const updateGame = (game, element, twoAnswers) => {
       break;
   }
   checkAnswer(game, userAnswer);
-  game = handleLivesGame(game, game.answers[game.level], game.lives);
-  if (game.lives) {
+  game = handleLivesGame(game, game.answers[game.level - 1], game.lives);
+  if (game.lives !== 0) {
     changeLevel(game, game.level++);
     changeScreen(updateQuestion(game));
+    header(game.lives);
   } else {
     changeScreen(stats(game));
+    header(game.lives);
   }
 };
 
 export const checkAnswer = (game, userAnswer) => {
   let userResult;
   if (userAnswer.id) {
-    userResult = game.questions[game.level].answers[userAnswer.id] === userAnswer.type;
+    userResult = game.questions[game.level - 1].answers[userAnswer.id] === userAnswer.type;
   } else if (userAnswer.length > 0) {
-    userResult = game.questions[game.level].answers[0].type === userAnswer[0].question1 && game.questions[game.level].answers[1].type === userAnswer[0].question2;
+    userResult = game.questions[game.level - 1].answers[0].type === userAnswer[0].question1 && game.questions[game.level - 1].answers[1].type === userAnswer[0].question2;
   } else {
-    userResult = game.questions[game.level].answers[0].type === userAnswer.type;
+    userResult = game.questions[game.level - 1].answers[0].type === userAnswer.type;
   }
   game.answers.push({
     time: Answer.NORMAL.time,
@@ -72,7 +72,7 @@ export const updateQuestion = (game) => {
   if (level === questions.length - 1) {
     changeScreen(stats(game));
   } else {
-    switch (questions[level].type) {
+    switch (questions[level - 1].type) {
       case `tinder-like`:
         return gameOneImage(questions[level - 1], game);
       case `two-of-two`:

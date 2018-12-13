@@ -16,7 +16,7 @@ export const countPoints = (answers, remainingLives) => {
       : 0;
   }, 0);
 
-  let gameResult = points + remainingLives * REMAINING_LIFE_SCORE;
+  const gameResult = points + remainingLives * REMAINING_LIFE_SCORE;
   return {
     gameResult,
     countAnswers,

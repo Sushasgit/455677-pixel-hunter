@@ -26,6 +26,9 @@ export const AnswerType = {
   PHOTO: `photo`,
 };
 
+export const FIRST_QUESTION = `question1`;
+export const SECOND_QUESTION = `question2`;
+
 export const sinleQuestion = {
   question: `Угадай, фото или рисунок`,
   images: [
@@ -91,6 +94,8 @@ export const twoImaesQuestion = {
 export const MAX_TIME = 30;
 export const MIN_NEEDED_ANSWERS = 10;
 export const REMAINING_LIFE_SCORE = 50;
+export const FAST_ANSWER_BONUS = 50;
+export const SLOW_ANSWER_FINE = -50;
 export const ANSWER_TIME = 30;
 
 export const INITIAL_GAME = Object.freeze({
