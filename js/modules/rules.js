@@ -1,5 +1,5 @@
 import {render, changeScreen} from '../utils';
-import header from './gameScreen/header-game/header.js';
+import header from './header-game/header.js';
 import firstGameScreen from './gameScreen/main-game-screen.js';
 import {INITIAL_GAME} from '../constants';
 

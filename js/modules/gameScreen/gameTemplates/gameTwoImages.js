@@ -1,7 +1,7 @@
 import {render} from '../../../utils';
 import {updateGame} from '../main-game-screen.js';
 import listStats from '../game-indicators';
-import {FIRST_QUESTION, SECOND_QUESTION} from '../../../constants.js';
+import {AnswerType, QuestionNums} from '../../../constants.js';
 
 export const gameTwoImages = (data, game) => {
   const {answers} = data;
@@ -11,22 +11,22 @@ export const gameTwoImages = (data, game) => {
     <div class="game__option game__twoImage">
       <img src=${answers[0].image.url} alt="Option 1" width=${answers[0].image.width} height=${answers[0].image.height}>
       <label class="game__answer game__answer--photo">
-        <input class="visually-hidden" name=${FIRST_QUESTION} type="radio" value="photo">
+        <input class="visually-hidden" name=${QuestionNums.FIRST_QUESTION} type="radio" value=${AnswerType.PAINTING}>
         <span>Фото</span>
       </label>
       <label class="game__answer game__answer--paint">
-        <input class="visually-hidden" name=${FIRST_QUESTION} type="radio" value=${answers[0].type}>
+        <input class="visually-hidden" name=${QuestionNums.FIRST_QUESTION} type="radio" value=${AnswerType.PHOTO}>
         <span>Рисунок</span>
       </label>
     </div>
     <div class="game__option game__twoImage">
-      <img src=${answers[1].image.url} alt="Option 2" width=${answers[0].image.width} height=${answers[0].image.height}>
+      <img src=${answers[1].image.url} alt="Option 2" width=${answers[0].image.width} height=${answers[1].image.height}>
       <label class="game__answer  game__answer--photo">
-        <input class="visually-hidden" name=${SECOND_QUESTION} type="radio" value=${answers[0].type}>
+        <input class="visually-hidden" name=${QuestionNums.SECOND_QUESTION} type="radio" value=${AnswerType.PAINTING}>
         <span>Фото</span>
       </label>
       <label class="game__answer  game__answer--paint">
-        <input class="visually-hidden" name=${SECOND_QUESTION} type="radio" value=${answers[1].type}>
+        <input class="visually-hidden" name=${QuestionNums.SECOND_QUESTION} type="radio" value=${AnswerType.PHOTO}>
         <span>Рисунок</span>
       </label>
     </div>

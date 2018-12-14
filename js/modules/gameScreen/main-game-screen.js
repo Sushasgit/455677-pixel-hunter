@@ -9,8 +9,6 @@ import gameTwoImages from './gameTemplates/gameTwoImages.js';
 import gameThreeImages from './gameTemplates/gameThreeImages.js';
 import stats from '../stats.js';
 
-import header from './header-game/header.js';
-
 let startGame = {
   answers: [],
   questions: images,
@@ -21,7 +19,7 @@ let startGame = {
 
 export const updateGame = (game, element, twoAnswers) => {
   const {questions, level} = game;
-  header(game.lives);
+
   let userAnswer;
   switch (questions[level - 1].type) {
     case `tinder-like`:
@@ -44,10 +42,8 @@ export const updateGame = (game, element, twoAnswers) => {
   if (game.lives !== 0) {
     changeLevel(game, game.level++);
     changeScreen(updateQuestion(game));
-    header(game.lives);
   } else {
     changeScreen(stats(game));
-    header(game.lives);
   }
 };
 

@@ -1,10 +1,13 @@
-export default class Header {
+import AbstractView from '../../AbstractView.js';
+
+export default class Header extends AbstractView {
   constructor(lives, time) {
+    super();
     this.lives = lives;
     this.time = time;
   }
 
-  createTemplate() {
+  get template() {
     const lives = `<div class="game__lives">
           ${new Array(3 - this.lives)
         .fill(`<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`)
@@ -27,4 +30,11 @@ export default class Header {
           ${lives}
         </header>`;
   }
+  onClick() {}
+  // bind() {
+  //   const buttonBack = this.element.querySelector(`button.back`);
+  //   buttonBack.addEventListener(`click`, () => {
+  //     this.onClick();
+  //   });
+  // }
 }
