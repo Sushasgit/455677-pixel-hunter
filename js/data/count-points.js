@@ -1,8 +1,8 @@
-import {Answer, MIN_NEEDED_ANSWERS, REMAINING_LIFE_SCORE} from '../constants.js';
+import {Answer, REMAINING_LIFE_SCORE} from '../constants.js';
 
 export const countPoints = (answers, remainingLives) => {
   const countAnswers = answers.reduce((prev, current) => {
-    prev[current.time]++;
+    prev[current.type]++;
     return prev;
   }, {
     [Answer.SLOW.title]: 0,
@@ -16,6 +16,10 @@ export const countPoints = (answers, remainingLives) => {
       : 0;
   }, 0);
 
-  let gameResult = answers.length < MIN_NEEDED_ANSWERS ? -1 : points + remainingLives * REMAINING_LIFE_SCORE;
-  return gameResult;
+  const gameResult = points + remainingLives * REMAINING_LIFE_SCORE;
+  return {
+    gameResult,
+    countAnswers,
+  };
+
 };

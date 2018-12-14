@@ -1,7 +1,8 @@
 import {render, changeScreen} from '../utils';
 import greetingScreen from './greeting.js';
 
-const template = `
+const introduction = () => {
+  const template = `
   <section class="intro">
     <button class="intro__asterisk asterisk" type="button">
         <span class="visually-hidden">Продолжить</span>
@@ -12,12 +13,16 @@ const template = `
     </p>
   </section>`;
 
-const element = render(template);
+  const element = render(template);
 
-const asteriskBtn = element.querySelector(`.intro__asterisk`);
+  const asteriskBtn = element.querySelector(`.intro__asterisk`);
 
-asteriskBtn.addEventListener(`click`, () => {
-  changeScreen(greetingScreen);
-});
+  asteriskBtn.addEventListener(`click`, () => {
+    changeScreen(greetingScreen());
+  });
+  return element;
+};
 
-export default element;
+export default introduction;
+
+
