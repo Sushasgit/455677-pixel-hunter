@@ -1,20 +1,20 @@
 class AbstractView {
   constructor() {
-    this._el = null;
+    this.el = null;
   }
 
   get template() { }
 
   get element() {
-    if (!this._el) {
+    if (!this.el) {
       this.render();
       this.bind();
     }
-    return this._el;
+    return this.el;
   }
   render() {
-    this._el = document.createElement(`div`);
-    this._el.innerHTML = this.template;
+    this.el = document.createElement(`div`);
+    this.el.innerHTML = this.template;
   }
 
   bind() { }

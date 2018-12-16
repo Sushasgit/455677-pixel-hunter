@@ -1,4 +1,4 @@
-import {Answer} from '../../constants.js';
+import {Answer} from '../constants.js';
 
 const listStats = (game) => {
   const handleTypeAnswers = (currentGame) => {

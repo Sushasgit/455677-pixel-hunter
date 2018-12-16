@@ -1,6 +1,3 @@
-import {changeScreen} from './utils.js';
-import welcomeScreen from './modules/introduction.js';
+import App from './App.js';
 
-
-changeScreen(welcomeScreen());
-
+App.showIntroPage();
