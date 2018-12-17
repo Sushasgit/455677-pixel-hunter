@@ -1,8 +1,8 @@
-import {Answer} from '../../constants.js';
+import {Answer} from '../constants.js';
 
-export const listStats = (game) => {
+const listStats = (game) => {
   const handleTypeAnswers = (currentGame) => {
-    let statsArr = currentGame.answers.map((element) => {
+    const statsArr = currentGame.answers.map((element) => {
       if (element.right) {
         switch (element.time) {
           case Answer.NORMAL.time:

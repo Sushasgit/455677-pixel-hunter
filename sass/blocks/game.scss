@@ -16,6 +16,16 @@
   @include bold-text;
   font-size: 60px;
   line-height: 45px;
+
+  &--blink {
+    text-decoration: blink;
+    color: $main-red-color;
+    animation-name: blinker;
+    animation-duration: 0.6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+  }
 }
 
 .game__task {
@@ -126,5 +136,15 @@
 
   &:active {
     border-color: $link-active-color;
+  }
+}
+
+@keyframes blinker {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }

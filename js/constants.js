@@ -1,3 +1,10 @@
+export const MAX_TIME = 30;
+export const MIN_NEEDED_ANSWERS = 10;
+export const REMAINING_LIFE_SCORE = 50;
+export const FAST_ANSWER_BONUS = 50;
+export const SLOW_ANSWER_FINE = -50;
+export const ANSWER_TIME = 30;
+
 export const Answer = {
   FAST: {
     title: `FAST`,
@@ -15,6 +22,7 @@ export const Answer = {
     points: 50,
   }
 };
+
 export const QuestionType = {
   TWO_OF_TWO: `two-of-two`,
   TINDER_LIKE: `tinder-like`,
@@ -26,77 +34,10 @@ export const AnswerType = {
   PHOTO: `photo`,
 };
 
-export const FIRST_QUESTION = `question1`;
-export const SECOND_QUESTION = `question2`;
-
-export const sinleQuestion = {
-  question: `Угадай, фото или рисунок`,
-  images: [
-    {
-      image: `https://k42.kn3.net/CF42609C8.jpg`,
-      rightAnswer: `painting`,
-      userAnswer: null,
-    },
-
-    {
-      image: `https://k42.kn3.net/D2F0370D6.jpg`,
-      rightAnswer: `painting`,
-      userAnswer: null,
-    },
-
-    {
-      image: `https://k32.kn3.net/5C7060EC5.jpg`,
-      rightAnswer: `painting`,
-      userAnswer: null,
-    },
-
-    {
-      image: `http://i.imgur.com/1KegWPz.jpg`,
-      rightAnswer: `photo`,
-      userAnswer: null,
-    },
-  ]
+export const QuestionNums = {
+  FIRST_QUESTION: `question1`,
+  SECOND_QUESTION: `question2`,
 };
-
-export const twoImaesQuestion = {
-  question: `Угадайте для каждого изображения фото или рисунок?`,
-  images: [
-    {
-      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-      rightAnswer: `painting`,
-      userAnswer: null,
-    },
-
-    {
-      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-      rightAnswer: `painting`,
-      userAnswer: null,
-    },
-
-    {
-      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-      rightAnswer: `painting`,
-      userAnswer: null,
-    },
-
-    {
-      firstImage: `https://i.imgur.com/DiHM5Zb.jpg`,
-      secondImage: `http://i.imgur.com/DKR1HtB.jpg`,
-      rightAnswer: `photo`,
-      userAnswer: null,
-    },
-  ]
-};
-
-export const MAX_TIME = 30;
-export const MIN_NEEDED_ANSWERS = 10;
-export const REMAINING_LIFE_SCORE = 50;
-export const FAST_ANSWER_BONUS = 50;
-export const SLOW_ANSWER_FINE = -50;
-export const ANSWER_TIME = 30;
 
 export const INITIAL_GAME = Object.freeze({
   answers: [
@@ -152,4 +93,5 @@ export const INITIAL_GAME = Object.freeze({
   lives: 3,
   level: 1,
   failed: false,
+  gameStarted: false
 });

@@ -1,11 +1,9 @@
-import {render, changeScreen} from '../utils';
-import header from './gameScreen/header-game/header.js';
-import firstGameScreen from './gameScreen/main-game-screen.js';
-import {INITIAL_GAME} from '../constants';
+import AbstractView from '../AbstractView';
 
-const rules = () => {
-  const template = `
-    <section class="rules">
+export default class RulesView extends AbstractView {
+  get template() {
+    return `
+      <section class="rules">
         <h2 class="rules__title">Правила</h2>
         <ul class="rules__description">
             <li>Угадай 10 раз для каждого изображения фото
@@ -22,25 +20,25 @@ const rules = () => {
                 Go!
             </button>
         </form>
-    </section>`;
+      </section>`;
+  }
+  bind() {
+    const playBtn = this.element.querySelector(`.rules__button`);
+    const inputName = this.element.querySelector(`.rules__input`);
+    const ruleForm = this.element.querySelector(`.rules__form`);
 
-  const element = render(template);
+    inputName.addEventListener(`keyup`, () =>{
+      playBtn.disabled = !inputName.value;
+    });
 
-  const playBtn = element.querySelector(`.rules__button`);
-  const inputName = element.querySelector(`.rules__input`);
-  const ruleForm = element.querySelector(`.rules__form`);
+    const onSubmit = (e) => {
+      e.preventDefault();
+      this.startGame();
+    // changeScreen(new MainGameScreen(startGame).updateQuestion());
+    // header(INITIAL_GAME.lives);
+    };
 
-  inputName.addEventListener(`keyup`, () =>{
-    playBtn.disabled = !inputName.value;
-  });
-
-  const onSubmit = () => {
-    changeScreen(firstGameScreen);
-    header(INITIAL_GAME.lives);
-  };
-
-  ruleForm.addEventListener(`submit`, onSubmit);
-  return element;
-};
-
-export default rules;
+    ruleForm.addEventListener(`submit`, (e)=>onSubmit(e));
+  }
+  startGame() {}
+}
