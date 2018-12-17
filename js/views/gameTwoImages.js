@@ -49,7 +49,6 @@ export default class GameTwoImages extends AbstractView {
     const radiosButtons = this.element.querySelectorAll(`.game__twoImage input`);
     this.element.insertBefore(new Header(this.game.lives, true, this.game.gameStarted).element, this.element.firstElementChild);
     const timer = new Counter(30);
-    timer.startCount();
 
     radiosButtons.forEach((radio) => {
       radio.addEventListener(`change`, () => {

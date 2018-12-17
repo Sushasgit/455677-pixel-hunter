@@ -37,8 +37,8 @@ export default class Header extends AbstractView {
   onClick() {}
   bind() {
     const buttonBack = this.element.querySelector(`button.back`);
-    const Test = this.element.querySelector(`.game__timer`);
-    const timer = new Counter(30, Test);
+    const timerContainer = this.element.querySelector(`.game__timer`);
+    const timer = new Counter(30, timerContainer);
     timer.startCount();
     buttonBack.addEventListener(`click`, () => {
       if (this.gameStarted) {

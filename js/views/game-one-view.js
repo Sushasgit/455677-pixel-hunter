@@ -35,10 +35,11 @@ export default class GameOneImage extends AbstractView {
   }
 
   bind() {
-    const Test = this.element.querySelector(`.game__timer`);
-    const timer = new Counter(30, Test);
-    timer.startCount();
-    this.element.insertBefore(new Header(this.game.lives, true, this.game.gameStarted).element, this.element.firstElementChild);
+    const timer = new Counter(30);
+
+    const {lives, gameStarted} = this.game;
+    this.element.insertBefore(new Header(lives, true, gameStarted).element, this.element.firstElementChild);
+
     const answerButtons = this.element.querySelectorAll(`.game__oneImage input`);
     answerButtons.forEach((radio) => {
       radio.addEventListener(`click`, () => {
