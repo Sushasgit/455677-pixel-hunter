@@ -1,9 +1,8 @@
-// import Header from './gameHeader';
 import {countPoints} from '../data/count-points.js';
 import listStats from './game-indicators.js';
 import {Answer, FAST_ANSWER_BONUS, REMAINING_LIFE_SCORE, SLOW_ANSWER_FINE} from '../constants.js';
 import AbstractView from '../AbstractView';
-
+import Header from './gameHeader.js';
 
 export default class Stats extends AbstractView {
   constructor(data) {
@@ -55,6 +54,11 @@ export default class Stats extends AbstractView {
         </tr>
       </table>
     </section>`;
+  }
+
+  bind() {
+    const header = new Header(this.lives);
+    this.element.insertBefore(header.element, this.element.firstElementChild);
   }
 
 }

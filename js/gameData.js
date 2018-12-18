@@ -23,6 +23,66 @@ export const images = [
     ]
   },
   {
+    type: `one-of-three`,
+    question: `Найдите фото среди изображений`,
+    answers: [
+      {
+        image: {
+          url: `https://k43.kn3.net/1C4F7F5D5.jpg`,
+          width: 304,
+          height: 455
+        },
+        type: `painting`
+      },
+      {
+        image: {
+          url: `https://k32.kn3.net/42C83EF0A.jpg`,
+          width: 304,
+          height: 455
+        },
+        type: `painting`
+      },
+      {
+        image: {
+          url: `http://i.imgur.com/mz0MSsy.jpg`,
+          width: 304,
+          height: 455
+        },
+        type: `photo`
+      }
+    ]
+  },
+  {
+    type: `one-of-three`,
+    question: `Найдите рисунок среди изображений`,
+    answers: [
+      {
+        image: {
+          url: `http://i.imgur.com/W5DNOVJ.jpg`,
+          width: 304,
+          height: 455
+        },
+        type: `photo`
+      },
+      {
+        image: {
+          url: `http://i.imgur.com/ncXRs5Y.jpg`,
+          width: 304,
+          height: 455
+        },
+        type: `photo`
+      },
+      {
+        image: {
+          url: `https://k41.kn3.net/FF5009BF0.jpg`,
+          width: 304,
+          height: 455
+        },
+        type: `painting`
+      }
+    ]
+  },
+  {
     type: `tinder-like`,
     question: `Угадай, фото или рисунок?`,
     answers: [
@@ -125,36 +185,6 @@ export const images = [
     ]
   },
   {
-    type: `one-of-three`,
-    question: `Найдите фото среди изображений`,
-    answers: [
-      {
-        image: {
-          url: `https://k43.kn3.net/1C4F7F5D5.jpg`,
-          width: 304,
-          height: 455
-        },
-        type: `painting`
-      },
-      {
-        image: {
-          url: `https://k32.kn3.net/42C83EF0A.jpg`,
-          width: 304,
-          height: 455
-        },
-        type: `painting`
-      },
-      {
-        image: {
-          url: `http://i.imgur.com/mz0MSsy.jpg`,
-          width: 304,
-          height: 455
-        },
-        type: `photo`
-      }
-    ]
-  },
-  {
     type: `tinder-like`,
     question: `Угадай, фото или рисунок?`,
     answers: [
@@ -162,36 +192,6 @@ export const images = [
         image: {
           url: `https://k31.kn3.net/4BF6BBF0E.jpg`,
           width: 705,
-          height: 455
-        },
-        type: `painting`
-      }
-    ]
-  },
-  {
-    type: `one-of-three`,
-    question: `Найдите рисунок среди изображений`,
-    answers: [
-      {
-        image: {
-          url: `http://i.imgur.com/W5DNOVJ.jpg`,
-          width: 304,
-          height: 455
-        },
-        type: `photo`
-      },
-      {
-        image: {
-          url: `http://i.imgur.com/ncXRs5Y.jpg`,
-          width: 304,
-          height: 455
-        },
-        type: `photo`
-      },
-      {
-        image: {
-          url: `https://k41.kn3.net/FF5009BF0.jpg`,
-          width: 304,
           height: 455
         },
         type: `painting`

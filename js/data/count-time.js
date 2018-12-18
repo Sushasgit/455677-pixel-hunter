@@ -1,4 +1,4 @@
-import {MAX_TIME, Answer} from '../constants.js';
+import {MAX_TIME, Answer, TIME_BLINK_COUNTER} from '../constants.js';
 
 export default class Counter {
   constructor(seconds = MAX_TIME, element) {
@@ -17,14 +17,14 @@ export default class Counter {
     }
     if (this.element) {
       const timer = `00:${this.seconds}`;
-      if (this.seconds <= 5) {
+      if (this.seconds <= TIME_BLINK_COUNTER) {
         this.element.classList.add(`game__timer--blink`);
       }
-      this.element.innerHTML = timer;
+      this.element.textContent = timer;
     }
+
     return this.seconds;
   }
-
   startCount() {
     this.counterContainer = setInterval(() => this.updateCount(), 1000);
   }

@@ -20,6 +20,4 @@ export default class IntroView extends AbstractView {
       this.onClickNext();
     });
   }
-
-  onClickNext() {}
 }

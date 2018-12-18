@@ -3,7 +3,9 @@ class AbstractView {
     this.el = null;
   }
 
-  get template() { }
+  get template() {
+    throw new Error(`Template is required`);
+  }
 
   get element() {
     if (!this.el) {

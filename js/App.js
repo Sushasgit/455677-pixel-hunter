@@ -2,12 +2,12 @@ import {changeScreen} from './utils.js';
 import IntroPage from './pages/introduction.js';
 import GreetingPage from './pages/greeting.js';
 import RulesPage from './pages/rules.js';
-import MainGamePage from './pages/mainGame.js';
 import StatsPage from './pages/statistic.js';
 import ConfirmModal from './views/confirm-modal.js';
+import GameModel from './GameModal.js';
 
 import {images} from './gameData.js';
-let startGame = {
+const startGame = {
   answers: [],
   questions: images,
   lives: 3,
@@ -17,6 +17,10 @@ let startGame = {
 };
 
 export default class App {
+
+  static getGameModel() {
+    this.gameModel = new GameModel(startGame);
+  }
 
   static showIntroPage() {
     const introPage = new IntroPage();
@@ -34,8 +38,9 @@ export default class App {
   }
 
   static startGamePage() {
-    const game = new MainGamePage(startGame);
-    changeScreen(game.updateQuestion());
+    this.getGameModel();
+    const game = this.gameModel.startGame();
+    changeScreen(game);
   }
 
   static showStatisticPage(game) {
