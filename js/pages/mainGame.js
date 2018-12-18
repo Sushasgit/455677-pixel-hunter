@@ -7,7 +7,7 @@ import GameOneImage from '../views/game-one-view.js';
 import GameTwoImages from '../views/gameTwoImages.js';
 import GameThreeImages from '../views/gameThreeImages.js';
 import App from '../App.js';
-import {AnswerType} from '../constants.js';
+import {AnswerType, QuestionType} from '../constants.js';
 
 export default class MainGamePage extends AbstractView {
   constructor(gameModel) {
@@ -19,18 +19,18 @@ export default class MainGamePage extends AbstractView {
     this.gameModel.gameStarted = true;
     let userAnswer;
     switch (this.gameModel.questions[this.gameModel.level - 1].type) {
-      case `tinder-like`:
+      case QuestionType.TINDER_LIKE:
         userAnswer = {
           type: element.value
         };
         break;
-      case `one-of-three`:
+      case QuestionType.ONE_OF_THREE:
         userAnswer = {
           id: element.getAttribute(`data-id`),
           type: element.getAttribute(`data-type`)
         };
         break;
-      case `two-of-two`:
+      case QuestionType.TWO_OF_TWO:
         userAnswer = twoAnswers;
         break;
     }

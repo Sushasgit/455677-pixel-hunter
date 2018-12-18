@@ -5,11 +5,11 @@ import RulesPage from './pages/rules.js';
 import StatsPage from './pages/statistic.js';
 import ConfirmModal from './views/confirm-modal.js';
 import GameModel from './GameModal.js';
+import FetchData from './api/FetshData.js';
 
-import {images} from './gameData.js';
 const startGame = {
   answers: [],
-  questions: images,
+  questions: null,
   lives: 3,
   level: 1,
   failed: false,
@@ -17,11 +17,6 @@ const startGame = {
 };
 
 export default class App {
-
-  static getGameModel() {
-    this.gameModel = new GameModel(startGame);
-  }
-
   static showIntroPage() {
     const introPage = new IntroPage();
     changeScreen(introPage);
@@ -38,9 +33,13 @@ export default class App {
   }
 
   static startGamePage() {
-    this.getGameModel();
-    const game = this.gameModel.startGame();
-    changeScreen(game);
+    FetchData.loadData()
+    .then((questions) => {
+      startGame.questions = questions;
+      this.gameModel = new GameModel(startGame);
+      const game = this.gameModel.startGame();
+      changeScreen(game);
+    });
   }
 
   static showStatisticPage(game) {
