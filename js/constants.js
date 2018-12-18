@@ -1,10 +1,11 @@
+import {images} from './gameData.js';
 export const MAX_TIME = 30;
 export const MIN_NEEDED_ANSWERS = 10;
 export const REMAINING_LIFE_SCORE = 50;
 export const FAST_ANSWER_BONUS = 50;
 export const SLOW_ANSWER_FINE = -50;
 export const ANSWER_TIME = 30;
-
+export const TIME_BLINK_COUNTER = 5;
 export const Answer = {
   FAST: {
     title: `FAST`,
@@ -35,63 +36,15 @@ export const AnswerType = {
 };
 
 export const QuestionNums = {
-  FIRST_QUESTION: `question1`,
-  SECOND_QUESTION: `question2`,
+  FIRST: `question1`,
+  SECOND: `question2`,
 };
 
-export const INITIAL_GAME = Object.freeze({
-  answers: [
-    {
-      time: Answer.NORMAL.time,
-      right: false,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: false,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-    {
-      time: Answer.NORMAL.time,
-      right: true,
-    },
-  ],
+export const INITIAL_GAME = {
+  answers: [],
+  questions: images,
   lives: 3,
   level: 1,
   failed: false,
   gameStarted: false
-});
+};

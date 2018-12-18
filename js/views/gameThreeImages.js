@@ -32,9 +32,11 @@ export default class GameThreeImages extends AbstractView {
   }
 
   bind() {
-    const timer = new Counter(30);
+    const timer = new Counter(30, undefined, this.game);
+    const {lives, gameStarted} = this.game;
+    const header = new Header(lives, true, gameStarted);
 
-    this.element.insertBefore(new Header(this.game.lives, true, this.game.gameStarted).element, this.element.firstElementChild);
+    this.element.insertBefore(header.element, this.element.firstElementChild);
 
     const gameThreeImage = this.element.querySelectorAll(`.game__threeImage`);
     gameThreeImage.forEach((radio) => {

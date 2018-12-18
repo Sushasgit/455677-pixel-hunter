@@ -7,22 +7,18 @@ import GameOneImage from '../views/game-one-view.js';
 import GameTwoImages from '../views/gameTwoImages.js';
 import GameThreeImages from '../views/gameThreeImages.js';
 import App from '../App.js';
+import {AnswerType} from '../constants.js';
 
-export default class MainGameScreen extends AbstractView {
-  constructor(data) {
+export default class MainGamePage extends AbstractView {
+  constructor(gameModel) {
     super();
-    this.game = data;
-  }
-
-  get template() {
-    return this.updateQuestion(this.game);
+    this.gameModel = gameModel;
   }
 
   updateGame(element, twoAnswers, time) {
-    const {questions, level} = this.game;
-    this.game.gameStarted = true;
+    this.gameModel.gameStarted = true;
     let userAnswer;
-    switch (questions[level - 1].type) {
+    switch (this.gameModel.questions[this.gameModel.level - 1].type) {
       case `tinder-like`:
         userAnswer = {
           type: element.value
@@ -39,46 +35,56 @@ export default class MainGameScreen extends AbstractView {
         break;
     }
     this.checkAnswer(userAnswer, time);
-    this.game = handleLivesGame(this.game, this.game.answers[this.game.level - 1], this.game.lives);
-    if (this.game.lives !== 0) {
-      changeLevel(this.game, this.game.level++);
-      changeScreen(this.updateQuestion(this.game));
+    this.gameModel = handleLivesGame(this.gameModel, this.gameModel.answers[this.gameModel.level - 1], this.gameModel.lives);
+    if (this.gameModel.lives !== 0) {
+      changeLevel(this.gameModel, this.gameModel.level++);
+      changeScreen(this.updateQuestion(this.gameModel));
     } else {
-      this.game.gameStarted = false;
-      App.showStatisticPage(this.game);
+      this.gameModel.gameStarted = false;
+      App.showStatisticPage(this.gameModel);
     }
   }
 
   checkAnswer(userAnswer, time) {
     let userResult;
     if (userAnswer.id) {
-      userResult = this.game.questions[this.game.level - 1].answers[userAnswer.id] === userAnswer.type;
+      userResult = this.gameModel.questions[this.gameModel.level - 1].answers[userAnswer.id - 1].type === userAnswer.type && userAnswer.type === AnswerType.PHOTO;
     } else if (userAnswer.length > 0) {
-      userResult = this.game.questions[this.game.level - 1].answers[0].type === userAnswer[0].question1 && this.game.questions[this.game.level - 1].answers[1].type === userAnswer[0].question2;
+      userResult = this.gameModel.questions[this.gameModel.level - 1].answers[0].type === userAnswer[0].question1 && this.gameModel.questions[this.gameModel.level - 1].answers[1].type === userAnswer[0].question2;
     } else {
-      userResult = this.game.questions[this.game.level - 1].answers[0].type === userAnswer.type;
+      userResult = this.gameModel.questions[this.gameModel.level - 1].answers[0].type === userAnswer.type;
     }
-    this.game.answers.push({
+    this.gameModel.answers.push({
       time: time.time,
-      type: time.title,
+      type: userResult ? time.title : ``,
       right: userResult,
     });
   }
 
+  isTimeOut() {
+    this.game.answers.push({
+      time: 0,
+      type: ``,
+      right: false,
+    });
+    this.game.level++;
+    this.updateQuestion();
+  }
+
   updateQuestion() {
-    const {level, questions} = this.game;
-    this.game.gameStarted = true;
+    const {level, questions} = this.gameModel;
+    this.gameModel.gameStarted = true;
     if (level === questions.length - 1) {
-      this.game.gameStarted = false;
-      App.showStatisticPage(this.game);
+      this.gameModel.gameStarted = false;
+      App.showStatisticPage(this.gameModel);
     } else {
       switch (questions[level - 1].type) {
         case `tinder-like`:
-          return new GameOneImage(questions[level - 1], this.game).element;
+          return new GameOneImage(questions[level - 1], this.gameModel).element;
         case `two-of-two`:
-          return new GameTwoImages(questions[level - 1], this.game).element;
+          return new GameTwoImages(questions[level - 1], this.gameModel).element;
         case `one-of-three`:
-          return new GameThreeImages(questions[level - 1], this.game).element;
+          return new GameThreeImages(questions[level - 1], this.gameModel).element;
       }
     }
     return null;

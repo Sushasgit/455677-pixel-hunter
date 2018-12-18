@@ -1,7 +1,11 @@
 import AbstractView from '../AbstractView';
 import App from '../App.js';
+import GameModel from '../GameModal.js';
 
 export default class ConfirmModal extends AbstractView {
+  static getGameModel() {
+    this.gameModel = new GameModel();
+  }
   get template() {
     return `
         <section class="modal">
