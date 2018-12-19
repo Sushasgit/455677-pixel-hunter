@@ -2,6 +2,10 @@ import AbstractView from '../AbstractView';
 import Header from './gameHeader.js';
 
 export default class RulesView extends AbstractView {
+  constructor(gameModel) {
+    super();
+    this.game = gameModel;
+  }
   get template() {
     return `
       <section class="rules">
@@ -30,14 +34,13 @@ export default class RulesView extends AbstractView {
     const header = new Header(0);
 
     this.element.insertBefore(header.element, this.element.firstElementChild);
-
     inputName.addEventListener(`keyup`, () =>{
       playBtn.disabled = !inputName.value;
     });
 
     const onSubmit = (e) => {
       e.preventDefault();
-      this.startGame();
+      this.handleSubmit(inputName.value);
     };
 
     ruleForm.addEventListener(`submit`, (e)=>onSubmit(e));
