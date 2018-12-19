@@ -1,5 +1,7 @@
 // import {images} from './gameData.js';
 export const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
+export const APPLICATION_ID = 6903820;
+
 export const MAX_QUANTITY_QUESTIONS = 10;
 export const MAX_TIME = 30;
 export const MIN_NEEDED_ANSWERS = 10;
