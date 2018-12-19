@@ -1,12 +1,11 @@
-import {INITIAL_GAME} from './constants.js';
+import {MAX_QUANTITY_QUESTIONS} from './constants.js';
 import MainGamePage from './pages/mainGame.js';
 import {deepClone} from './helpers.js';
 
 export default class GameModel {
-  constructor(data = INITIAL_GAME) {
+  constructor(data) {
     this.data = data;
-    this.game = new MainGamePage(data);
-    this.initialGame = deepClone(INITIAL_GAME);
+    this.initialGame = deepClone(data);
     this.restart();
   }
 
@@ -21,7 +20,7 @@ export default class GameModel {
   }
 
   isEndOfGame() {
-    return this.game.questions >= 10;
+    return this.game.questions >= MAX_QUANTITY_QUESTIONS;
   }
 
   gameOver() {

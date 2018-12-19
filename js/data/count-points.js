@@ -1,4 +1,4 @@
-import {Answer, REMAINING_LIFE_SCORE} from '../constants.js';
+import {Answer, GameBonuses} from '../constants.js';
 
 export const countPoints = (answers, remainingLives) => {
   const countAnswers = answers.reduce((prev, current) => {
@@ -16,7 +16,7 @@ export const countPoints = (answers, remainingLives) => {
       : 0;
   }, 0);
 
-  const gameResult = points + remainingLives * REMAINING_LIFE_SCORE;
+  const gameResult = points + remainingLives * GameBonuses.REMAINING_LIFE_SCORE;
   return {
     gameResult,
     countAnswers,
