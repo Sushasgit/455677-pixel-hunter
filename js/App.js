@@ -6,6 +6,7 @@ import StatsPage from './pages/statistic.js';
 import ConfirmModal from './views/confirm-modal.js';
 import GameModel from './GameModal.js';
 import FetchData from './api/FetshData.js';
+import ErrorModal from './views/error-modal.js';
 
 const startGame = {
   answers: [],
@@ -14,6 +15,7 @@ const startGame = {
   level: 1,
   failed: false,
   gameStarted: false,
+  name: ``,
 };
 
 export default class App {
@@ -28,28 +30,41 @@ export default class App {
   }
 
   static showRulesPage() {
-    const rules = new RulesPage();
-    changeScreen(rules);
-  }
-
-  static startGamePage() {
     FetchData.loadData()
     .then((questions) => {
       startGame.questions = questions;
       this.gameModel = new GameModel(startGame);
-      const game = this.gameModel.startGame();
-      changeScreen(game);
+      const rules = new RulesPage(this.gameModel);
+      changeScreen(rules);
     });
   }
 
+  static startGamePage(game) {
+    this.gameModel = new GameModel(game);
+    const gameData = this.gameModel.startGame();
+    changeScreen(gameData);
+  }
+
   static showStatisticPage(game) {
-    const stats = new StatsPage(game);
-    changeScreen(stats);
+    FetchData.saveStatictic(game)
+    .then(() => {
+      FetchData.loadStatistic(game.name)
+      .then((data)=>{
+        const stats = new StatsPage(data);
+        changeScreen(stats);
+      });
+    });
   }
 
   static showShowConfirmModal() {
-    const stats = new ConfirmModal();
+    const confirm = new ConfirmModal();
     const body = document.querySelector(`body`);
-    body.appendChild(stats.element);
+    body.appendChild(confirm.element);
+  }
+
+  static showErrorModal() {
+    const error = new ErrorModal();
+    const body = document.querySelector(`body`);
+    body.appendChild(error.element);
   }
 }

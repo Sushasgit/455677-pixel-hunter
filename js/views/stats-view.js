@@ -7,23 +7,21 @@ import Header from './gameHeader.js';
 export default class Stats extends AbstractView {
   constructor(data) {
     super();
-    this.failed = data.failed;
-    this.answers = data.answers;
-    this.lives = data.lives;
     this.data = data;
   }
 
   get template() {
-    const result = countPoints(this.answers, this.lives);
-    const answers = result.countAnswers.FAST + result.countAnswers.NORMAL + result.countAnswers.SLOW;
-    return `
+    return this.data.map((game) => {
+      const result = countPoints(game.answers, game.lives);
+      const answers = result.countAnswers.FAST + result.countAnswers.NORMAL + result.countAnswers.SLOW;
+      const template = `
       <section class="result">
-      <h2 class="result__title">${this.failed ? `Fail` : `Победа!`}</h2>
+      <h2 class="result__title">${game.failed ? `Fail` : `Победа!`}</h2>
       <table class="result__table">
         <tr>
           <td class="result__number">1.</td>
           <td colspan="2">
-            ${listStats(this.data)}
+            ${listStats(game)}
           </td>
           <td class="result__points">× 100</td>
           <td class="result__total">${answers * Answer.NORMAL.points}</td>
@@ -38,9 +36,9 @@ export default class Stats extends AbstractView {
         <tr>
           <td></td>
           <td class="result__extra">Бонус за жизни:</td>
-          <td class="result__extra">${this.lives} <span class="stats__result stats__result--alive"></span></td>
+          <td class="result__extra">${game.lives} <span class="stats__result stats__result--alive"></span></td>
           <td class="result__points">× 50</td>
-          <td class="result__total">${this.lives * GameBonuses.REMAINING_LIFE_SCORE}</td>
+          <td class="result__total">${game.lives * GameBonuses.REMAINING_LIFE_SCORE}</td>
         </tr>
         <tr>
           <td></td>
@@ -54,11 +52,11 @@ export default class Stats extends AbstractView {
         </tr>
       </table>
     </section>`;
+      return template;
+    }).join(``);
   }
-
   bind() {
-    const header = new Header(this.lives);
+    const header = new Header(0);
     this.element.insertBefore(header.element, this.element.firstElementChild);
   }
-
 }
