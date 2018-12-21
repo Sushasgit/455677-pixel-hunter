@@ -3,7 +3,7 @@ import App from '../App.js';
 
 export default class RulesPage {
   constructor(game) {
-    this.game = game.data;
+    this.game = game;
     this.rulesPage = new RulesView(this.game);
 
     this.rulesPage.handleSubmit = (name) => {

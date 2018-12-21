@@ -5,26 +5,25 @@ import AbstractView from '../AbstractView.js';
 import Counter from '../data/count-time.js';
 
 export default class GameThreeImages extends AbstractView {
-  constructor(data, game) {
+  constructor(game) {
     super();
-    this.data = data;
     this.game = game;
   }
 
   get template() {
-    const {answers} = this.data;
+    const currentQuestion = this.game.questions[this.game.level - 1];
     return `
       <section class="game">
-      <p class="game__task">${this.data.question}</p>
+      <p class="game__task">${currentQuestion.question}</p>
       <form class="game__content  game__content--triple">
-        <div data-id="1" data-type=${answers[0].type} class="game__option game__threeImage">
-          <img src=${answers[0].image.url}  alt="Option 1" width=${answers[0].image.width} height=${answers[0].image.height}>
+        <div data-id="1" data-type=${currentQuestion.answers[0].type} class="game__option game__threeImage">
+          <img src=${currentQuestion.answers[0].image.url}  alt="Option 1" width=${currentQuestion.answers[0].image.width} height=${currentQuestion.answers[0].image.height}>
         </div>
-        <div data-id="2" data-type=${answers[1].type} class="game__option game__threeImage">
-          <img src=${answers[1].image.url}  alt="Option 2" width=${answers[0].image.width} height=${answers[0].image.height}>
+        <div data-id="2" data-type=${currentQuestion.answers[1].type} class="game__option game__threeImage">
+          <img src=${currentQuestion.answers[1].image.url}  alt="Option 2" width=${currentQuestion.answers[0].image.width} height=${currentQuestion.answers[0].image.height}>
         </div>
-        <div data-id="3" data-type=${answers[2].type} class="game__option game__threeImage">
-          <img src=${answers[2].image.url} alt="Option 3" width=${answers[0].image.width} height=${answers[0].image.height}>
+        <div data-id="3" data-type=${currentQuestion.answers[2].type} class="game__option game__threeImage">
+          <img src=${currentQuestion.answers[2].image.url} alt="Option 3" width=${currentQuestion.answers[0].image.width} height=${currentQuestion.answers[0].image.height}>
         </div>
       </form>
       ${listStats(this.game)}
@@ -32,7 +31,6 @@ export default class GameThreeImages extends AbstractView {
   }
 
   bind() {
-    const timer = new Counter(30, undefined, this.game);
     const {lives, gameStarted} = this.game;
     const header = new Header(lives, true, gameStarted);
 
@@ -41,8 +39,9 @@ export default class GameThreeImages extends AbstractView {
     const gameThreeImage = this.element.querySelectorAll(`.game__threeImage`);
     gameThreeImage.forEach((radio) => {
       radio.addEventListener(`click`, () => {
-        return new MainGameScreen(this.game).updateGame(radio, undefined, timer.getAnswerTime(timer.currentTimer));
+        this.onGetAnswers(radio, this.game.time);
       }, false);
     });
   }
+  onGetAnswers() {}
 }

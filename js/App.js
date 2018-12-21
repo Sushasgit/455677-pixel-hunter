@@ -7,12 +7,14 @@ import ConfirmModal from './views/confirm-modal.js';
 import GameModel from './GameModal.js';
 import FetchData from './api/FetshData.js';
 import ErrorModal from './views/error-modal.js';
+import MainGamePage from './pages/mainGame.js';
 
 const startGame = {
   answers: [],
   questions: null,
   lives: 3,
   level: 1,
+  time: 30,
   failed: false,
   gameStarted: false,
   name: ``,
@@ -32,17 +34,21 @@ export default class App {
   static showRulesPage() {
     FetchData.loadData()
     .then((questions) => {
+     
       startGame.questions = questions;
       this.gameModel = new GameModel(startGame);
+      console.log('modelololol', this.gameModel)
       const rules = new RulesPage(this.gameModel);
       changeScreen(rules);
     });
   }
 
   static startGamePage(game) {
-    this.gameModel = new GameModel(game);
-    const gameData = this.gameModel.startGame();
-    changeScreen(gameData);
+    console.log('model', game)
+    const gameData = new MainGamePage(game);
+    changeScreen(gameData.element);
+    console.log('startGame', gameData.startGame())
+    gameData.startGame();
   }
 
   static showStatisticPage(game) {

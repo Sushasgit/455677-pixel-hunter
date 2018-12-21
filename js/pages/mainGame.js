@@ -1,6 +1,6 @@
 import AbstractView from '../AbstractView.js';
 
-import {changeScreen} from '../utils.js';
+import {changeScreen, render} from '../utils.js';
 import {handleLivesGame} from '../data/game-lifes.js';
 import {changeLevel} from '../data/change-level.js';
 import GameOneImage from '../views/game-one-view.js';
@@ -8,11 +8,31 @@ import GameTwoImages from '../views/gameTwoImages.js';
 import GameThreeImages from '../views/gameThreeImages.js';
 import App from '../App.js';
 import {AnswerType, QuestionType} from '../constants.js';
+import Header from '../views/gameHeader.js';
 
 export default class MainGamePage extends AbstractView {
   constructor(gameModel) {
     super();
-    this.gameModel = gameModel;
+    this.gameModel = gameModel.data;
+    this.game = gameModel;
+    this.header = new Header(this.gameModel.time, this.gameModel.lives);
+    this.gameContainerElement = render();
+    this.gameView = this.updateQuestion();
+    this.gameContainerElement.appendChild(this.header.element);
+    this.gameContainerElement.appendChild(this.gameView.element);
+
+    this.interval = null;
+
+  }
+
+  get element() {
+    return this.gameContainerElement;
+  }
+
+  startGame() {
+    console.log('sxsxs', this.game)
+    console.log(this.gameView.element)
+    return this.updateQuestion().element;
   }
 
   updateGame(element, twoAnswers, time) {
@@ -38,7 +58,7 @@ export default class MainGamePage extends AbstractView {
     this.gameModel = handleLivesGame(this.gameModel, this.gameModel.answers[this.gameModel.level - 1], this.gameModel.lives);
     if (this.gameModel.lives !== 0) {
       changeLevel(this.gameModel, this.gameModel.level++);
-      changeScreen(this.updateQuestion(this.gameModel));
+      changeScreen(this.updateQuestion().element);
     } else {
       this.gameModel.gameStarted = false;
       App.showStatisticPage(this.gameModel);
@@ -71,23 +91,52 @@ export default class MainGamePage extends AbstractView {
     this.updateQuestion();
   }
 
-  updateQuestion() {
-    const {level, questions} = this.gameModel;
-    this.gameModel.gameStarted = true;
-    if (level === questions.length - 1) {
-      this.gameModel.gameStarted = false;
-      App.showStatisticPage(this.gameModel);
-    } else {
-      switch (questions[level - 1].type) {
-        case `tinder-like`:
-          return new GameOneImage(questions[level - 1], this.gameModel).element;
-        case `two-of-two`:
-          return new GameTwoImages(questions[level - 1], this.gameModel).element;
-        case `one-of-three`:
-          return new GameThreeImages(questions[level - 1], this.gameModel).element;
-      }
+  updateHeader(time) {
+    this.header.updateTime(time);
+  }
+
+  checkTimer() {
+
+    if (this.game.isEndOfTime()) {
+      console.log('ednd')
     }
-    return null;
+  }
+
+  updateQuestion() {
+    this.interval = setInterval(() => {
+      this.game.tick();
+      this.updateHeader();
+      this.checkTimer();
+    }, 1000);
+      const typeQuestion = this.gameModel.questions[this.gameModel.level - 1].type;
+      let template;
+      switch (typeQuestion) {
+        case `tinder-like`:
+          const tenderLikeTemplate = new GameOneImage(this.gameModel);
+          tenderLikeTemplate.onGetAnswers = (element, time) => {
+            this.updateGame(element, undefined, time);
+          };
+          template = tenderLikeTemplate;
+          break;
+        case `two-of-two`:
+          const twoOfTwoTemplate = new GameTwoImages(this.gameModel);
+          twoOfTwoTemplate.onGetAnswers = (twoAnswers, time) => {
+            this.updateGame(undefined, twoAnswers, time);
+          };
+          template = twoOfTwoTemplate;
+          break;
+        case `one-of-three`:
+          const oneOfThreeTemplate = new GameThreeImages(this.gameModel);
+          oneOfThreeTemplate.onGetAnswers = (element, time) => {
+            this.updateGame(element, undefined, time);
+          };
+          template = oneOfThreeTemplate;
+          break;
+          
+      }
+      return template;
+      console.log(template)
+     
   }
   bind() {
   }
