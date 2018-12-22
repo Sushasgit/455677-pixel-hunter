@@ -1,7 +1,14 @@
 import {assert} from 'chai';
-
-import {INITIAL_GAME} from '../constants.js';
 import {changeLevel} from './change-level.js';
+
+const INITIAL_GAME = {
+  answers: [],
+  questions: [],
+  lives: 3,
+  level: 1,
+  failed: false,
+  gameStarted: false
+};
 
 describe(`Check level changer`, () => {
 

@@ -1,28 +1,22 @@
-import AbstractView from '../AbstractView.js';
-
 import {changeScreen, render} from '../utils.js';
-import {handleLivesGame} from '../data/game-lifes.js';
-import {changeLevel} from '../data/change-level.js';
+import {getAnswerTime} from '../helpers.js';
 import GameOneImage from '../views/game-one-view.js';
 import GameTwoImages from '../views/gameTwoImages.js';
 import GameThreeImages from '../views/gameThreeImages.js';
 import App from '../App.js';
-import {AnswerType, QuestionType} from '../constants.js';
+import {AnswerType, QuestionType, GameRules} from '../constants.js';
 import Header from '../views/gameHeader.js';
 
-export default class MainGamePage extends AbstractView {
+export default class MainGamePage {
   constructor(gameModel) {
-    super();
-    this.gameModel = gameModel.data;
+    this.gameModel = gameModel.game;
     this.game = gameModel;
-    this.header = new Header(this.gameModel.time, this.gameModel.lives);
+    this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
     this.gameContainerElement = render();
     this.gameView = this.updateQuestion();
-    this.gameContainerElement.appendChild(this.header.element);
     this.gameContainerElement.appendChild(this.gameView.element);
 
     this.interval = null;
-
   }
 
   get element() {
@@ -30,12 +24,12 @@ export default class MainGamePage extends AbstractView {
   }
 
   startGame() {
-    console.log('sxsxs', this.game)
-    console.log(this.gameView.element)
-    return this.updateQuestion().element;
+    this.game.restart();
+    this.startTimer();
+    return changeScreen(this.updateQuestion().element);
   }
 
-  updateGame(element, twoAnswers, time) {
+  updateGame(element, twoAnswers) {
     this.gameModel.gameStarted = true;
     let userAnswer;
     switch (this.gameModel.questions[this.gameModel.level - 1].type) {
@@ -54,41 +48,38 @@ export default class MainGamePage extends AbstractView {
         userAnswer = twoAnswers;
         break;
     }
-    this.checkAnswer(userAnswer, time);
-    this.gameModel = handleLivesGame(this.gameModel, this.gameModel.answers[this.gameModel.level - 1], this.gameModel.lives);
-    if (this.gameModel.lives !== 0) {
-      changeLevel(this.gameModel, this.gameModel.level++);
+    this.checkAnswer(userAnswer, this.gameModel.time);
+    if (this.gameModel.lives) {
+      this.gameModel = this.game.nextLevel();
+      this.gameModel.time = GameRules.MAX_TIME;
       changeScreen(this.updateQuestion().element);
-    } else {
+    } else if (this.game.isEndOfGame() || !this.gameModel.lives) {
+      this.stopTimer();
       this.gameModel.gameStarted = false;
       App.showStatisticPage(this.gameModel);
     }
   }
 
-  checkAnswer(userAnswer, time) {
+  checkAnswer(userAnswer) {
     let userResult;
     if (userAnswer.id) {
       userResult = this.gameModel.questions[this.gameModel.level - 1].answers[userAnswer.id - 1].type === userAnswer.type && userAnswer.type === AnswerType.PHOTO;
+      this.gameModel = this.game.deductGameLives(userResult);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
     } else if (userAnswer.length > 0) {
       userResult = this.gameModel.questions[this.gameModel.level - 1].answers[0].type === userAnswer[0].question1 && this.gameModel.questions[this.gameModel.level - 1].answers[1].type === userAnswer[0].question2;
+      this.gameModel = this.game.deductGameLives(userResult);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
     } else {
       userResult = this.gameModel.questions[this.gameModel.level - 1].answers[0].type === userAnswer.type;
+      this.gameModel = this.game.deductGameLives(userResult);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
     }
     this.gameModel.answers.push({
-      time: time.time,
-      type: userResult ? time.title : ``,
+      time: getAnswerTime(this.gameModel.time) ? getAnswerTime(this.gameModel.time).time : 0,
+      type: (userResult && getAnswerTime(this.gameModel.time)) ? getAnswerTime(this.gameModel.time).title : ``,
       right: userResult,
     });
-  }
-
-  isTimeOut() {
-    this.game.answers.push({
-      time: 0,
-      type: ``,
-      right: false,
-    });
-    this.game.level++;
-    this.updateQuestion();
   }
 
   updateHeader(time) {
@@ -96,47 +87,61 @@ export default class MainGamePage extends AbstractView {
   }
 
   checkTimer() {
-
     if (this.game.isEndOfTime()) {
-      console.log('ednd')
+      this.gameModel.time = GameRules.MAX_TIME;
+      this.gameModel = this.game.nextLevel();
+      const answer = {
+        time: getAnswerTime(0),
+        right: false,
+      };
+      this.gameModel = this.game.deductGameLives(false);
+      this.gameModel.answers.push(answer);
+      this.game.deductGameLives(answer);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
+      changeScreen(this.updateQuestion().element);
     }
   }
 
-  updateQuestion() {
+  startTimer() {
     this.interval = setInterval(() => {
-      this.game.tick();
-      this.updateHeader();
+      this.gameModel = this.game.tick();
+      this.updateHeader(this.gameModel.time);
       this.checkTimer();
     }, 1000);
-      const typeQuestion = this.gameModel.questions[this.gameModel.level - 1].type;
-      let template;
-      switch (typeQuestion) {
-        case `tinder-like`:
-          const tenderLikeTemplate = new GameOneImage(this.gameModel);
-          tenderLikeTemplate.onGetAnswers = (element, time) => {
-            this.updateGame(element, undefined, time);
-          };
-          template = tenderLikeTemplate;
-          break;
-        case `two-of-two`:
-          const twoOfTwoTemplate = new GameTwoImages(this.gameModel);
-          twoOfTwoTemplate.onGetAnswers = (twoAnswers, time) => {
-            this.updateGame(undefined, twoAnswers, time);
-          };
-          template = twoOfTwoTemplate;
-          break;
-        case `one-of-three`:
-          const oneOfThreeTemplate = new GameThreeImages(this.gameModel);
-          oneOfThreeTemplate.onGetAnswers = (element, time) => {
-            this.updateGame(element, undefined, time);
-          };
-          template = oneOfThreeTemplate;
-          break;
-          
-      }
-      return template;
-      console.log(template)
-     
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+  }
+
+  updateQuestion() {
+    this.gameModel.gameStarted = true;
+    const typeQuestion = this.gameModel.questions[this.gameModel.level - 1].type;
+    let template;
+    switch (typeQuestion) {
+      case QuestionType.TINDER_LIKE:
+        const tenderLikeTemplate = new GameOneImage(this.gameModel, this.header);
+        tenderLikeTemplate.onGetAnswers = (element, time) => {
+          this.updateGame(element, undefined, time);
+        };
+        template = tenderLikeTemplate;
+        break;
+      case QuestionType.TWO_OF_TWO:
+        const twoOfTwoTemplate = new GameTwoImages(this.gameModel, this.header);
+        twoOfTwoTemplate.onGetAnswers = (twoAnswers, time) => {
+          this.updateGame(undefined, twoAnswers, time);
+        };
+        template = twoOfTwoTemplate;
+        break;
+      case QuestionType.ONE_OF_THREE:
+        const oneOfThreeTemplate = new GameThreeImages(this.gameModel, this.header);
+        oneOfThreeTemplate.onGetAnswers = (element, time) => {
+          this.updateGame(element, undefined, time);
+        };
+        template = oneOfThreeTemplate;
+        break;
+    }
+    return template;
   }
   bind() {
   }

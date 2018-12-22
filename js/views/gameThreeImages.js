@@ -1,12 +1,10 @@
-import MainGameScreen from '../pages/mainGame.js';
 import listStats from './game-indicators';
-import Header from './gameHeader.js';
 import AbstractView from '../AbstractView.js';
-import Counter from '../data/count-time.js';
 
 export default class GameThreeImages extends AbstractView {
-  constructor(game) {
+  constructor(game, header) {
     super();
+    this.header = header;
     this.game = game;
   }
 
@@ -31,15 +29,12 @@ export default class GameThreeImages extends AbstractView {
   }
 
   bind() {
-    const {lives, gameStarted} = this.game;
-    const header = new Header(lives, true, gameStarted);
-
-    this.element.insertBefore(header.element, this.element.firstElementChild);
+    this.element.insertBefore(this.header.element, this.element.firstElementChild);
 
     const gameThreeImage = this.element.querySelectorAll(`.game__threeImage`);
     gameThreeImage.forEach((radio) => {
       radio.addEventListener(`click`, () => {
-        this.onGetAnswers(radio, this.game.time);
+        this.onGetAnswers(radio);
       }, false);
     });
   }

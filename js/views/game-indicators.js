@@ -1,4 +1,4 @@
-import {Answer} from '../constants.js';
+import {Answer, GameRules} from '../constants.js';
 
 const listStats = (game) => {
   const handleTypeAnswers = (currentGame) => {
@@ -24,7 +24,7 @@ const listStats = (game) => {
     ${handleTypeAnswers(game)
     .join(``)}    
     
-    ${new Array(10 - game.answers.length)
+    ${new Array(GameRules.MAX_QUANTITY_QUESTIONS - game.answers.length)
     .fill(`<li class="stats__result stats__result--unknown"></li>`)
     .join(``)}   
     </ul>`;

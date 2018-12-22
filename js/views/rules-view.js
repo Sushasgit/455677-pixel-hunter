@@ -34,15 +34,15 @@ export default class RulesView extends AbstractView {
     const header = new Header(0);
 
     this.element.insertBefore(header.element, this.element.firstElementChild);
-    inputName.addEventListener(`keyup`, () =>{
+    inputName.addEventListener(`keyup`, () => {
       playBtn.disabled = !inputName.value;
     });
 
     const onSubmit = (e) => {
       e.preventDefault();
-      this.handleSubmit(inputName.value);
+      this.onSubmit(inputName.value);
     };
 
-    ruleForm.addEventListener(`submit`, (e)=>onSubmit(e));
+    ruleForm.addEventListener(`submit`, (e) => onSubmit(e));
   }
 }

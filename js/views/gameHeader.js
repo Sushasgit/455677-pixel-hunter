@@ -1,6 +1,6 @@
 import AbstractView from "../AbstractView";
-import Counter from "../data/count-time";
 import App from '../App.js';
+import {GameRules} from '../constants.js';
 
 export default class Header extends AbstractView {
   constructor(lives, withTimer, gameStarted) {
@@ -11,8 +11,15 @@ export default class Header extends AbstractView {
   }
 
   get template() {
-    const lives = `<div class="game__lives">
-         </div>`;
+    const lives = `
+    <div class="game__lives">
+      ${new Array(3 - this.lives)
+        .fill(`<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`)
+        .join(``)}    
+        ${new Array(this.lives)
+        .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`)
+        .join(``)}
+    </div>`;
     return `<header class="header">
           <button class="back">
             <span class="visually-hidden">Вернуться к началу</span>
@@ -29,11 +36,20 @@ export default class Header extends AbstractView {
   }
 
   onClick() {}
+
+  updateTime(time) {
+    const timeContainer = this.element.querySelector(`.game__timer`);
+    const timer = `00:${time}`;
+    if (time <= GameRules.TIME_BLINK_COUNTER) {
+      timeContainer.classList.add(`game__timer--blink`);
+    } else {
+      timeContainer.classList.remove(`game__timer--blink`);
+    }
+    timeContainer.textContent = timer;
+  }
+
   bind() {
     const buttonBack = this.element.querySelector(`button.back`);
-    // const timerContainer = this.element.querySelector(`.game__timer`);
-    // const timer = new Counter(30, timerContainer);
-    // timer.startCount();
     buttonBack.addEventListener(`click`, () => {
       if (this.gameStarted) {
         App.showShowConfirmModal();

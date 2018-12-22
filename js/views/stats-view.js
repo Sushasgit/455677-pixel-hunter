@@ -14,7 +14,22 @@ export default class Stats extends AbstractView {
     return this.data.map((game) => {
       const result = countPoints(game.answers, game.lives);
       const answers = result.countAnswers.FAST + result.countAnswers.NORMAL + result.countAnswers.SLOW;
-      const template = `
+      const failedTemplate = `
+      <section class="result">
+      <h2 class="result__title">${game.failed ? `Fail` : `Победа!`}</h2>
+      <table class="result__table">
+      <tr>
+        <td class="result__number">1.</td>
+        <td colspan="2">
+          ${listStats(game)}
+        </td>
+        <td class="result__points">× 100</td>
+        <td class="result__total">Fail</td>
+      </tr>
+    </table>
+    </section>
+    `;
+      const winTemplate = `
       <section class="result">
       <h2 class="result__title">${game.failed ? `Fail` : `Победа!`}</h2>
       <table class="result__table">
@@ -52,6 +67,7 @@ export default class Stats extends AbstractView {
         </tr>
       </table>
     </section>`;
+      const template = game.failed ? failedTemplate : winTemplate;
       return template;
     }).join(``);
   }

@@ -1,5 +1,4 @@
 export const countTime = (game) => {
-  console.log(game)
   const newState = Object.assign({}, game);
 
   if (game.time < 0) {

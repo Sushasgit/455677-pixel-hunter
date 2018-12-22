@@ -1,19 +1,15 @@
-import MainGameScreen from '../pages/mainGame.js';
 import listStats from './game-indicators';
 import {QuestionNums, AnswerType} from '../constants.js';
 import AbstractView from '../AbstractView.js';
-import Counter from '../data/count-time.js';
-import Header from './gameHeader.js';
 
 export default class GameOneImage extends AbstractView {
-  constructor(game) {
+  constructor(game, header) {
     super();
     this.game = game;
+    this.header = header;
   }
 
   get template() {
-    console.log('TEMPLATE', this.game)
-    const {questions} = this.game;
     const currentQuestion = this.game.questions[this.game.level - 1];
     return `
     <section class="game">
@@ -36,11 +32,7 @@ export default class GameOneImage extends AbstractView {
   }
 
   bind() {
-    const {lives, gameStarted} = this.game;
-    const header = new Header(lives, true, gameStarted);
-
-    this.element.insertBefore(header.element, this.element.firstElementChild);
-
+    this.element.insertBefore(this.header.element, this.element.firstElementChild);
     const answerButtons = this.element.querySelectorAll(`.game__oneImage input`);
 
     answerButtons.forEach((radio) => {

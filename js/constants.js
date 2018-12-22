@@ -1,25 +1,33 @@
-// import {images} from './gameData.js';
 export const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 export const APPLICATION_ID = 6903820;
 
-export const MAX_QUANTITY_QUESTIONS = 10;
-export const MAX_TIME = 30;
-export const MIN_NEEDED_ANSWERS = 10;
-export const TIME_BLINK_COUNTER = 5;
+export const GameRules = {
+  MAX_QUANTITY_QUESTIONS: 10,
+  MAX_TIME: 30,
+  MIN_NEEDED_ANSWERS: 10,
+  TIME_BLINK_COUNTER: 5,
+  GAME_LIVES: 3,
+};
+
+export const AnswerTimeType = {
+  FAST: `FAST`,
+  NORMAL: `NORMAL`,
+  SLOW: `SLOW`,
+};
 
 export const Answer = {
   FAST: {
-    title: `FAST`,
+    title: AnswerTimeType.FAST,
     time: 10,
     points: 150,
   },
   NORMAL: {
-    title: `NORMAL`,
+    title: AnswerTimeType.NORMAL,
     time: 20,
     points: 100,
   },
   SLOW: {
-    title: `SLOW`,
+    title: AnswerTimeType.SLOW,
     time: 30,
     points: 50,
   }
@@ -45,13 +53,4 @@ export const AnswerType = {
 export const QuestionNums = {
   FIRST: `question1`,
   SECOND: `question2`,
-};
-
-export const INITIAL_GAME = {
-  answers: [],
-  questions: [],
-  lives: 3,
-  level: 1,
-  failed: false,
-  gameStarted: false
 };

@@ -1,13 +1,11 @@
-import MainGameScreen from '../pages/mainGame.js';
 import listStats from './game-indicators';
-import Header from './gameHeader.js';
 import AbstractView from '../AbstractView.js';
 import {AnswerType, QuestionNums} from '../constants.js';
-import Counter from '../data/count-time.js';
 
 export default class GameTwoImages extends AbstractView {
-  constructor(game) {
+  constructor(game, header) {
     super();
+    this.header = header;
     this.game = game;
   }
 
@@ -46,9 +44,8 @@ export default class GameTwoImages extends AbstractView {
 
   bind() {
     const radiosButtons = this.element.querySelectorAll(`.game__twoImage input`);
-    const {lives, gameStarted} = this.game;
-    const header = new Header(lives, true, gameStarted);
-    this.element.insertBefore(header.element, this.element.firstElementChild);
+
+    this.element.insertBefore(this.header.element, this.element.firstElementChild);
 
     radiosButtons.forEach((radio) => {
       radio.addEventListener(`change`, () => {
@@ -66,7 +63,6 @@ export default class GameTwoImages extends AbstractView {
         answersTwoImages.push(answer);
         this.onGetAnswers(answersTwoImages, this.game.time);
       }
-      return null;
     };
   }
   onGetAnswers() {}
