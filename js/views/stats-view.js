@@ -11,7 +11,7 @@ export default class Stats extends AbstractView {
   }
 
   get template() {
-    return this.data.map((game) => {
+    return this.data.map((game, index) => {
       const result = countPoints(game.answers, game.lives);
       const answers = result.countAnswers.FAST + result.countAnswers.NORMAL + result.countAnswers.SLOW;
       const failedTemplate = `
@@ -19,7 +19,7 @@ export default class Stats extends AbstractView {
       <h2 class="result__title">${game.failed ? `Fail` : `Победа!`}</h2>
       <table class="result__table">
       <tr>
-        <td class="result__number">1.</td>
+        <td class="result__number">${index + 1}</td>
         <td colspan="2">
           ${listStats(game)}
         </td>
@@ -34,7 +34,7 @@ export default class Stats extends AbstractView {
       <h2 class="result__title">${game.failed ? `Fail` : `Победа!`}</h2>
       <table class="result__table">
         <tr>
-          <td class="result__number">1.</td>
+          <td class="result__number">${index + 1}</td>
           <td colspan="2">
             ${listStats(game)}
           </td>
