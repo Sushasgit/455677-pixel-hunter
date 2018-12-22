@@ -9,19 +9,15 @@ import FetchData from './api/FetshData.js';
 import ErrorModal from './views/error-modal.js';
 import MainGamePage from './pages/mainGame.js';
 
-const startGame = {
-  answers: [],
-  questions: null,
-  lives: 3,
-  level: 1,
-  time: 20,
-  failed: false,
-  gameStarted: false,
-  name: ``,
-};
+import {INITIAL_GAME} from './constants.js';
 
 export default class App {
+
   static showIntroPage() {
+    FetchData.loadData()
+    .then((questions) => {
+      INITIAL_GAME.questions = questions;
+    });
     const introPage = new IntroPage();
     changeScreen(introPage);
   }
@@ -37,14 +33,10 @@ export default class App {
   }
 
   static startGamePage(name) {
-    startGame.name = name;
-    FetchData.loadData()
-    .then((questions) => {
-      startGame.questions = questions;
-      const gameData = new MainGamePage(new GameModel(startGame));
-      changeScreen(gameData.element);
-      gameData.startGame();
-    });
+    INITIAL_GAME.name = name;
+    const gameData = new MainGamePage(new GameModel(INITIAL_GAME));
+    changeScreen(gameData.element);
+    gameData.startGame();
   }
 
   static showStatisticPage(game) {
@@ -58,8 +50,8 @@ export default class App {
     });
   }
 
-  static showShowConfirmModal() {
-    const confirm = new ConfirmModal();
+  static showShowConfirmModal(interval) {
+    const confirm = new ConfirmModal(interval);
     const body = document.querySelector(`body`);
     body.appendChild(confirm.element);
   }

@@ -1,11 +1,12 @@
 import AbstractView from '../AbstractView';
 import App from '../App.js';
-import GameModel from '../GameModal.js';
 
 export default class ConfirmModal extends AbstractView {
-  static getGameModel() {
-    this.gameModel = new GameModel();
+  constructor(interval) {
+    super();
+    this.interval = interval;
   }
+
   get template() {
     return `
         <section class="modal">
@@ -27,8 +28,8 @@ export default class ConfirmModal extends AbstractView {
     const confirm = this.element.querySelector(`.confirm`);
     const cancelButtons = this.element.querySelectorAll(`.cancel`);
     const body = document.querySelector(`body`);
-
     confirm.addEventListener(`click`, () => {
+      clearInterval(this.interval);
       App.showRulesPage();
       body.removeChild(this.element);
     });

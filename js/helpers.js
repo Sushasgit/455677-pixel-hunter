@@ -1,10 +1,9 @@
 import {Answer, GameRules} from './constants.js';
 
 export const deepClone = (object) => {
-  let output;
+  const output = Array.isArray(object) ? [] : {};
   let value;
   let key;
-  output = Array.isArray(object) ? [] : {};
   for (key in object) {
     if (object.hasOwnProperty(key)) {
       value = object[key];

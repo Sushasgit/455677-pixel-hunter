@@ -18,22 +18,22 @@ export default class GameTwoImages extends AbstractView {
         <div class="game__option game__twoImage">
           <img src=${currentQuestion.answers[0].image.url} alt="Option 1" width=${currentQuestion.answers[0].image.width} height=${currentQuestion.answers[0].image.height}>
           <label class="game__answer game__answer--photo">
-            <input class="visually-hidden" name=${QuestionNums.FIRST} type="radio" value=${AnswerType.PAINTING}>
+            <input class="visually-hidden" name=${QuestionNums.FIRST} type="radio" value=${AnswerType.PHOTO}>
             <span>Фото</span>
           </label>
           <label class="game__answer game__answer--paint">
-            <input class="visually-hidden" name=${QuestionNums.FIRST} type="radio" value=${AnswerType.PHOTO}>
+            <input class="visually-hidden" name=${QuestionNums.FIRST} type="radio" value=${AnswerType.PAINTING}>
             <span>Рисунок</span>
           </label>
         </div>
         <div class="game__option game__twoImage">
           <img src=${currentQuestion.answers[1].image.url} alt="Option 2" width=${currentQuestion.answers[1].image.width} height=${currentQuestion.answers[1].image.height}>
           <label class="game__answer  game__answer--photo">
-            <input class="visually-hidden" name=${QuestionNums.SECOND} type="radio" value=${AnswerType.PAINTING}>
+            <input class="visually-hidden" name=${QuestionNums.SECOND} type="radio" value=${AnswerType.PHOTO}>
             <span>Фото</span>
           </label>
           <label class="game__answer  game__answer--paint">
-            <input class="visually-hidden" name=${QuestionNums.SECOND} type="radio" value=${AnswerType.PHOTO}>
+            <input class="visually-hidden" name=${QuestionNums.SECOND} type="radio" value=${AnswerType.PAINTING}>
             <span>Рисунок</span>
           </label>
         </div>

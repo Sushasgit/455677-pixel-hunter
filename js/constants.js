@@ -6,7 +6,17 @@ export const GameRules = {
   MAX_TIME: 30,
   MIN_NEEDED_ANSWERS: 10,
   TIME_BLINK_COUNTER: 5,
-  GAME_LIVES: 3,
+  GAME_LIVES: 4,
+};
+export const INITIAL_GAME = {
+  answers: [],
+  questions: null,
+  lives: 3,
+  level: 1,
+  time: GameRules.MAX_TIME,
+  failed: false,
+  gameStarted: true,
+  name: ``,
 };
 
 export const AnswerTimeType = {

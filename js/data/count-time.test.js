@@ -1,15 +1,7 @@
 import {assert} from 'chai';
 import {countTime} from './count-time.js';
 
-const INITIAL_GAME = {
-  answers: [],
-  questions: [],
-  lives: 3,
-  level: 1,
-  failed: false,
-  gameStarted: false,
-  time: 30,
-};
+import {INITIAL_GAME} from '../constants.js';
 
 describe(`Check countdown timer`, () => {
 

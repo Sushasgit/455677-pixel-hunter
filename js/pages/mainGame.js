@@ -11,12 +11,11 @@ export default class MainGamePage {
   constructor(gameModel) {
     this.gameModel = gameModel.game;
     this.game = gameModel;
-    this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
+    this.interval = null;
+    this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     this.gameContainerElement = render();
     this.gameView = this.updateQuestion();
     this.gameContainerElement.appendChild(this.gameView.element);
-
-    this.interval = null;
   }
 
   get element() {
@@ -26,6 +25,7 @@ export default class MainGamePage {
   startGame() {
     this.game.restart();
     this.startTimer();
+    this.header.updateInterval(this.interval);
     return changeScreen(this.updateQuestion().element);
   }
 
@@ -48,12 +48,14 @@ export default class MainGamePage {
         userAnswer = twoAnswers;
         break;
     }
+
     this.checkAnswer(userAnswer, this.gameModel.time);
-    if (this.gameModel.lives) {
-      this.gameModel = this.game.nextLevel();
+    if (!this.game.isGameOver() && !this.game.isEndOfGame()) {
+      this.gameModel.gameStarted = true;
+      this.gameModel = this.game.getNextLevel();
       this.gameModel.time = GameRules.MAX_TIME;
       changeScreen(this.updateQuestion().element);
-    } else if (this.game.isEndOfGame() || !this.gameModel.lives) {
+    } else if (this.game.isEndOfGame() || this.game.isGameOver()) {
       this.stopTimer();
       this.gameModel.gameStarted = false;
       App.showStatisticPage(this.gameModel);
@@ -62,18 +64,20 @@ export default class MainGamePage {
 
   checkAnswer(userAnswer) {
     let userResult;
+    const currentQuestion = this.gameModel.questions[this.gameModel.level - 1];
     if (userAnswer.id) {
-      userResult = this.gameModel.questions[this.gameModel.level - 1].answers[userAnswer.id - 1].type === userAnswer.type && userAnswer.type === AnswerType.PHOTO;
+      const questionThreeType = currentQuestion.question.indexOf(`рисунок`) ? AnswerType.PAINTING : AnswerType.PHOTO;
+      userResult = currentQuestion.answers[userAnswer.id - 1].type === userAnswer.type && userAnswer.type === questionThreeType;
       this.gameModel = this.game.deductGameLives(userResult);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     } else if (userAnswer.length > 0) {
-      userResult = this.gameModel.questions[this.gameModel.level - 1].answers[0].type === userAnswer[0].question1 && this.gameModel.questions[this.gameModel.level - 1].answers[1].type === userAnswer[0].question2;
+      userResult = currentQuestion.answers[0].type === userAnswer[0].question1 && currentQuestion.answers[1].type === userAnswer[0].question2;
       this.gameModel = this.game.deductGameLives(userResult);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     } else {
-      userResult = this.gameModel.questions[this.gameModel.level - 1].answers[0].type === userAnswer.type;
+      userResult = currentQuestion.answers[0].type === userAnswer.type;
       this.gameModel = this.game.deductGameLives(userResult);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     }
     this.gameModel.answers.push({
       time: getAnswerTime(this.gameModel.time) ? getAnswerTime(this.gameModel.time).time : 0,
@@ -89,16 +93,20 @@ export default class MainGamePage {
   checkTimer() {
     if (this.game.isEndOfTime()) {
       this.gameModel.time = GameRules.MAX_TIME;
-      this.gameModel = this.game.nextLevel();
+      this.gameModel = this.game.getNextLevel();
       const answer = {
         time: getAnswerTime(0),
         right: false,
       };
-      this.gameModel = this.game.deductGameLives(false);
       this.gameModel.answers.push(answer);
-      this.game.deductGameLives(answer);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted);
-      changeScreen(this.updateQuestion().element);
+      this.gameModel = this.game.deductGameLives(answer.right);
+      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
+      if (this.gameModel.lives >= 0) {
+        changeScreen(this.updateQuestion().element);
+      } else {
+        App.showStatisticPage(this.gameModel);
+        this.stopTimer();
+      }
     }
   }
 

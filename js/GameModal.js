@@ -7,17 +7,19 @@ import {handleLivesGame} from './data/game-lifes.js';
 export default class GameModel {
   constructor(data) {
     this.game = data;
-    this.initialGame = deepClone(data);
+    this.initialGame = deepClone(this.game);
     this.restart();
   }
 
   restart() {
     this.game = this.initialGame;
+    this.game.answers = [];
     return this.game;
   }
 
-  nextLevel() {
-    this.game = changeLevel(this.game, this.game.level + 1);
+  getNextLevel() {
+    const level = this.game.level < 10 ? this.game.level + 1 : this.game.level;
+    this.game = changeLevel(this.game, level);
     return this.game;
   }
 
@@ -32,14 +34,14 @@ export default class GameModel {
   }
 
   isEndOfGame() {
-    return this.game.questions > GameRules.MAX_QUANTITY_QUESTIONS;
+    return this.game.answers.length >= GameRules.MAX_QUANTITY_QUESTIONS;
   }
 
   isEndOfTime() {
     return this.game.time <= 0;
   }
 
-  gameOver() {
-    return this.game.lives <= 0;
+  isGameOver() {
+    return this.game.lives < 0;
   }
 }
