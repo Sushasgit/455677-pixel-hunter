@@ -7,21 +7,22 @@ import ConfirmModal from './views/confirm-modal.js';
 import GameModel from './GameModal.js';
 import FetchData from './api/FetshData.js';
 import ErrorModal from './views/error-modal.js';
+import MainGamePage from './pages/mainGame.js';
 
-const startGame = {
-  answers: [],
-  questions: null,
-  lives: 3,
-  level: 1,
-  failed: false,
-  gameStarted: false,
-  name: ``,
-};
+import {INITIAL_GAME} from './constants.js';
+let currentGame = {};
 
 export default class App {
+
   static showIntroPage() {
-    const introPage = new IntroPage();
-    changeScreen(introPage);
+    FetchData.loadData()
+    .then((questions) => {
+      currentGame = Object.assign(INITIAL_GAME, {questions});
+    })
+    .then(() => {
+      const introPage = new IntroPage();
+      changeScreen(introPage);
+    });
   }
 
   static showGreetingPage() {
@@ -30,19 +31,15 @@ export default class App {
   }
 
   static showRulesPage() {
-    FetchData.loadData()
-    .then((questions) => {
-      startGame.questions = questions;
-      this.gameModel = new GameModel(startGame);
-      const rules = new RulesPage(this.gameModel);
-      changeScreen(rules);
-    });
+    const rules = new RulesPage();
+    changeScreen(rules);
   }
 
-  static startGamePage(game) {
-    this.gameModel = new GameModel(game);
-    const gameData = this.gameModel.startGame();
-    changeScreen(gameData);
+  static startGamePage(name) {
+    currentGame = Object.assign(INITIAL_GAME, {name});
+    const gameData = new MainGamePage(new GameModel(currentGame));
+    changeScreen(gameData.element);
+    gameData.startGame();
   }
 
   static showStatisticPage(game) {
@@ -56,8 +53,8 @@ export default class App {
     });
   }
 
-  static showShowConfirmModal() {
-    const confirm = new ConfirmModal();
+  static showConfirmModal(interval) {
+    const confirm = new ConfirmModal(interval);
     const body = document.querySelector(`body`);
     body.appendChild(confirm.element);
   }

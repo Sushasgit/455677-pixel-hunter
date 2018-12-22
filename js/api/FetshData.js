@@ -34,11 +34,8 @@ export default class FetchData {
 
   static loadStatistic(userName) {
     return (
-      fetch(`${SERVER_URL}/stats/:${APPLICATION_ID}-:${userName}`).
-        then(toJSON)
-        .then((data) => {
-          return data;
-        })
+      fetch(`${SERVER_URL}/stats/:${APPLICATION_ID}-:${userName}`)
+      .then(toJSON)
         .catch((err) => {
           App.showErrorModal();
           throw new Error(`Что-то пошло не так` + err.message);
