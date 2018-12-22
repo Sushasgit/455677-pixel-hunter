@@ -57,7 +57,7 @@ export default class Header extends AbstractView {
     const buttonBack = this.element.querySelector(`button.back`);
     buttonBack.addEventListener(`click`, () => {
       if (this.gameStarted) {
-        App.showShowConfirmModal(this.interval);
+        App.showConfirmModal(this.interval);
       } else {
         App.showGreetingPage();
       }

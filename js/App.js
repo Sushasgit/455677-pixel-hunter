@@ -10,16 +10,19 @@ import ErrorModal from './views/error-modal.js';
 import MainGamePage from './pages/mainGame.js';
 
 import {INITIAL_GAME} from './constants.js';
+let currentGame = {};
 
 export default class App {
 
   static showIntroPage() {
     FetchData.loadData()
     .then((questions) => {
-      INITIAL_GAME.questions = questions;
+      currentGame = Object.assign(INITIAL_GAME, {questions});
+    })
+    .then(() => {
+      const introPage = new IntroPage();
+      changeScreen(introPage);
     });
-    const introPage = new IntroPage();
-    changeScreen(introPage);
   }
 
   static showGreetingPage() {
@@ -33,8 +36,8 @@ export default class App {
   }
 
   static startGamePage(name) {
-    INITIAL_GAME.name = name;
-    const gameData = new MainGamePage(new GameModel(INITIAL_GAME));
+    currentGame = Object.assign(INITIAL_GAME, {name});
+    const gameData = new MainGamePage(new GameModel(currentGame));
     changeScreen(gameData.element);
     gameData.startGame();
   }
@@ -50,7 +53,7 @@ export default class App {
     });
   }
 
-  static showShowConfirmModal(interval) {
+  static showConfirmModal(interval) {
     const confirm = new ConfirmModal(interval);
     const body = document.querySelector(`body`);
     body.appendChild(confirm.element);

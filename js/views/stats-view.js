@@ -23,7 +23,7 @@ export default class Stats extends AbstractView {
         <td colspan="2">
           ${listStats(game)}
         </td>
-        <td class="result__points">× 100</td>
+        <td class="result__points">× ${Answer.NORMAL.points}</td>
         <td class="result__total">Fail</td>
       </tr>
     </table>
@@ -38,28 +38,28 @@ export default class Stats extends AbstractView {
           <td colspan="2">
             ${listStats(game)}
           </td>
-          <td class="result__points">× 100</td>
+          <td class="result__points">× ${Answer.NORMAL.points}</td>
           <td class="result__total">${answers * Answer.NORMAL.points}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за скорость:</td>
           <td class="result__extra">${result.countAnswers.FAST} <span class="stats__result stats__result--fast"></span></td>
-          <td class="result__points">× 50</td>
+          <td class="result__points">× ${GameBonuses.FAST_ANSWER_BONUS}</td>
           <td class="result__total">${result.countAnswers.FAST * GameBonuses.FAST_ANSWER_BONUS}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за жизни:</td>
           <td class="result__extra">${game.lives} <span class="stats__result stats__result--alive"></span></td>
-          <td class="result__points">× 50</td>
+          <td class="result__points">×${GameBonuses.REMAINING_LIFE_SCORE} </td>
           <td class="result__total">${game.lives * GameBonuses.REMAINING_LIFE_SCORE}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Штраф за медлительность:</td>
           <td class="result__extra">${result.countAnswers.SLOW} <span class="stats__result stats__result--slow"></span></td>
-          <td class="result__points">× 50</td>
+          <td class="result__points">× ${GameBonuses.SLOW_ANSWER_FINE}</td>
           <td class="result__total">${result.countAnswers.SLOW * GameBonuses.SLOW_ANSWER_FINE}</td>
         </tr>
         <tr>

@@ -66,7 +66,7 @@ export default class MainGamePage {
     let userResult;
     const currentQuestion = this.gameModel.questions[this.gameModel.level - 1];
     if (userAnswer.id) {
-      const questionThreeType = currentQuestion.question.indexOf(`рисунок`) ? AnswerType.PAINTING : AnswerType.PHOTO;
+      const questionThreeType = currentQuestion.question.indexOf(`рисунок`) === -1 ? AnswerType.PHOTO : AnswerType.PAINTING;
       userResult = currentQuestion.answers[userAnswer.id - 1].type === userAnswer.type && userAnswer.type === questionThreeType;
       this.gameModel = this.game.deductGameLives(userResult);
       this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);

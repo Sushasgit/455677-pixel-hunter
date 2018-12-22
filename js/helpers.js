@@ -17,7 +17,7 @@ export const getAnswerTime = (time = GameRules.MAX_TIME) => {
   let answerTime = null;
   if (time >= 0 && time <= 10) {
     answerTime = Answer.SLOW;
-  } else if (time > 10 && time < 20) {
+  } else if (time > 10 && time <= 20) {
     answerTime = Answer.NORMAL;
   } else if (time > 20) {
     answerTime = Answer.FAST;
