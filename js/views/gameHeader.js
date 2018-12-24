@@ -36,8 +36,6 @@ export default class Header extends AbstractView {
         </header>`;
   }
 
-  onClick() {}
-
   updateTime(time) {
     const timeContainer = this.element.querySelector(`.game__timer`);
     const timer = `00:${time}`;

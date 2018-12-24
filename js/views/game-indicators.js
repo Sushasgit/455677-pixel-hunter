@@ -2,20 +2,24 @@ import {Answer, GameRules} from '../constants.js';
 
 const listStats = (game) => {
   const handleTypeAnswers = (currentGame) => {
+    let statisticTemplate;
     const statsArr = currentGame.answers.map((element) => {
       if (element.right) {
         switch (element.time) {
           case Answer.NORMAL.time:
-            return `<li class="stats__result stats__result--correct"></li>`;
+            statisticTemplate = `<li class="stats__result stats__result--correct"></li>`;
+            break;
           case Answer.FAST.time:
-            return `<li class="stats__result stats__result--fast"></li>`;
+            statisticTemplate = `<li class="stats__result stats__result--fast"></li>`;
+            break;
           case Answer.SLOW.time:
-            return ` <li class="stats__result stats__result--slow"></li>`;
+            statisticTemplate = ` <li class="stats__result stats__result--slow"></li>`;
+            break;
         }
       } else {
         return `<li class="stats__result stats__result--wrong"></li>`;
       }
-      return null;
+      return statisticTemplate;
     });
     return statsArr;
   };
