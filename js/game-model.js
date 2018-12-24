@@ -2,7 +2,7 @@ import {GameRules} from './constants.js';
 import {deepClone} from './helpers.js';
 import {countTime} from './data/count-time.js';
 import {changeLevel} from './data/change-level.js';
-import {handleLivesGame} from './data/handle-game-lifes.js';
+import {handleLivesGame} from './data/handle-game-lives.js';
 
 export default class GameModel {
   constructor(data) {
