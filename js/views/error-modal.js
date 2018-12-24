@@ -1,7 +1,6 @@
 import AbstractView from '../abstract-view';
 
 export default class ErrorModal extends AbstractView {
-
   get template() {
     return `
         <section class="modal">

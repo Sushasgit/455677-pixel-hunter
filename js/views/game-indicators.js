@@ -27,7 +27,6 @@ const gameIndicators = (game) => {
   return `<ul class="stats">
     ${handleTypeAnswers(game)
     .join(``)}    
-    
     ${new Array(GameRules.MAX_QUANTITY_QUESTIONS - game.answers.length)
     .fill(`<li class="stats__result stats__result--unknown"></li>`)
     .join(``)}   
