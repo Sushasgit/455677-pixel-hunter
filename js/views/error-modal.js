@@ -1,10 +1,7 @@
-import AbstractView from '../AbstractView';
-import GameModel from '../GameModal.js';
+import AbstractView from '../abstract-view';
 
 export default class ErrorModal extends AbstractView {
-  static getGameModel() {
-    this.gameModel = new GameModel();
-  }
+
   get template() {
     return `
         <section class="modal">

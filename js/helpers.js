@@ -7,7 +7,7 @@ export const deepClone = (object) => {
   for (key in object) {
     if (object.hasOwnProperty(key)) {
       value = object[key];
-      output[key] = (typeof v === `object`) ? deepClone(value) : value;
+      output[key] = (typeof value === `object`) ? deepClone(value) : value;
     }
   }
   return output;

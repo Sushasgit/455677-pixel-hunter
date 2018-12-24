@@ -10,7 +10,7 @@ export const handleLivesGame = (game, answer, remainingLives) => {
   }
   const newGame = Object.assign({}, game, {
     lives: remainingLives,
-    failed: (remainingLives < 0) ? true : false,
+    failed: remainingLives < 0,
   });
   return newGame;
 };

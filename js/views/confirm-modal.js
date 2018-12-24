@@ -1,5 +1,5 @@
-import AbstractView from '../AbstractView';
-import App from '../App.js';
+import AbstractView from '../abstract-view';
+import App from '../app.js';
 
 export default class ConfirmModal extends AbstractView {
   constructor(interval) {

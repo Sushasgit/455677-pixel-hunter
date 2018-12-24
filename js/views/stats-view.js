@@ -1,17 +1,17 @@
 import {countPoints} from '../data/count-points.js';
-import listStats from './game-indicators.js';
+import gameIndicators from './game-indicators.js';
 import {Answer, GameBonuses} from '../constants.js';
-import AbstractView from '../AbstractView';
-import Header from './gameHeader.js';
+import AbstractView from '../abstract-view';
+import GameHeader from './game-header.js';
 
-export default class Stats extends AbstractView {
+export default class StatsView extends AbstractView {
   constructor(data) {
     super();
-    this.data = data;
+    this._data = data;
   }
 
   get template() {
-    return this.data.map((game, index) => {
+    return this._data.map((game, index) => {
       const result = countPoints(game.answers, game.lives);
       const answers = result.countAnswers.FAST + result.countAnswers.NORMAL + result.countAnswers.SLOW;
       const failedTemplate = `
@@ -21,7 +21,7 @@ export default class Stats extends AbstractView {
       <tr>
         <td class="result__number">${index + 1}</td>
         <td colspan="2">
-          ${listStats(game)}
+          ${gameIndicators(game)}
         </td>
         <td class="result__points">× ${Answer.NORMAL.points}</td>
         <td class="result__total">Fail</td>
@@ -36,7 +36,7 @@ export default class Stats extends AbstractView {
         <tr>
           <td class="result__number">${index + 1}</td>
           <td colspan="2">
-            ${listStats(game)}
+            ${gameIndicators(game)}
           </td>
           <td class="result__points">× ${Answer.NORMAL.points}</td>
           <td class="result__total">${answers * Answer.NORMAL.points}</td>
@@ -72,7 +72,7 @@ export default class Stats extends AbstractView {
     }).join(``);
   }
   bind() {
-    const header = new Header(0);
+    const header = new GameHeader(0);
     this.element.insertBefore(header.element, this.element.firstElementChild);
   }
 }

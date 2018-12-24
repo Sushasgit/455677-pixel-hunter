@@ -1,20 +1,20 @@
 import {changeScreen, render} from '../utils.js';
 import {getAnswerTime} from '../helpers.js';
-import GameOneImage from '../views/game-one-view.js';
-import GameTwoImages from '../views/gameTwoImages.js';
-import GameThreeImages from '../views/gameThreeImages.js';
-import App from '../App.js';
+import GameOneImage from '../views/game-one-image.js';
+import GameTwoImages from '../views/game-two-images.js';
+import GameThreeImages from '../views/game-three-images.js';
+import App from '../app.js';
 import {AnswerType, QuestionType, GameRules} from '../constants.js';
-import Header from '../views/gameHeader.js';
+import GameHeader from '../views/game-header.js';
 
 export default class MainGamePage {
   constructor(gameModel) {
     this.gameModel = gameModel.game;
     this.game = gameModel;
     this.interval = null;
-    this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
+    this.header = new GameHeader(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     this.gameContainerElement = render();
-    this.gameView = this.updateQuestion();
+    this.gameView = this._updateQuestion();
     this.gameContainerElement.appendChild(this.gameView.element);
   }
 
@@ -24,9 +24,9 @@ export default class MainGamePage {
 
   startGame() {
     this.game.restart();
-    this.startTimer();
+    this._startTimer();
     this.header.updateInterval(this.interval);
-    return changeScreen(this.updateQuestion().element);
+    return changeScreen(this._updateQuestion().element);
   }
 
   updateGame(element, twoAnswers) {
@@ -49,35 +49,35 @@ export default class MainGamePage {
         break;
     }
 
-    this.checkAnswer(userAnswer, this.gameModel.time);
+    this._checkAnswer(userAnswer, this.gameModel.time);
     if (!this.game.isGameOver() && !this.game.isEndOfGame()) {
       this.gameModel.gameStarted = true;
       this.gameModel = this.game.getNextLevel();
       this.gameModel.time = GameRules.MAX_TIME;
-      changeScreen(this.updateQuestion().element);
+      changeScreen(this._updateQuestion().element);
     } else if (this.game.isEndOfGame() || this.game.isGameOver()) {
-      this.stopTimer();
+      this._stopTimer();
       this.gameModel.gameStarted = false;
       App.showStatisticPage(this.gameModel);
     }
   }
 
-  checkAnswer(userAnswer) {
+  _checkAnswer(userAnswer) {
     let userResult;
     const currentQuestion = this.gameModel.questions[this.gameModel.level - 1];
     if (userAnswer.id) {
       const questionThreeType = currentQuestion.question.indexOf(`рисунок`) === -1 ? AnswerType.PHOTO : AnswerType.PAINTING;
       userResult = currentQuestion.answers[userAnswer.id - 1].type === userAnswer.type && userAnswer.type === questionThreeType;
       this.gameModel = this.game.deductGameLives(userResult);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
+      this.header = new GameHeader(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     } else if (userAnswer.length > 0) {
       userResult = currentQuestion.answers[0].type === userAnswer[0].question1 && currentQuestion.answers[1].type === userAnswer[0].question2;
       this.gameModel = this.game.deductGameLives(userResult);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
+      this.header = new GameHeader(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     } else {
       userResult = currentQuestion.answers[0].type === userAnswer.type;
       this.gameModel = this.game.deductGameLives(userResult);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
+      this.header = new GameHeader(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
     }
     this.gameModel.answers.push({
       time: getAnswerTime(this.gameModel.time) ? getAnswerTime(this.gameModel.time).time : 0,
@@ -90,7 +90,7 @@ export default class MainGamePage {
     this.header.updateTime(time);
   }
 
-  checkTimer() {
+  _checkTimer() {
     if (this.game.isEndOfTime()) {
       this.gameModel.time = GameRules.MAX_TIME;
       this.gameModel = this.game.getNextLevel();
@@ -100,29 +100,29 @@ export default class MainGamePage {
       };
       this.gameModel.answers.push(answer);
       this.gameModel = this.game.deductGameLives(answer.right);
-      this.header = new Header(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
+      this.header = new GameHeader(this.gameModel.lives, true, this.gameModel.gameStarted, this.interval);
       if (this.gameModel.lives >= 0) {
-        changeScreen(this.updateQuestion().element);
+        changeScreen(this._updateQuestion().element);
       } else {
         App.showStatisticPage(this.gameModel);
-        this.stopTimer();
+        this._stopTimer();
       }
     }
   }
 
-  startTimer() {
+  _startTimer() {
     this.interval = setInterval(() => {
       this.gameModel = this.game.tick();
       this.updateHeader(this.gameModel.time);
-      this.checkTimer();
+      this._checkTimer();
     }, 1000);
   }
 
-  stopTimer() {
+  _stopTimer() {
     clearInterval(this.interval);
   }
 
-  updateQuestion() {
+  _updateQuestion() {
     this.gameModel.gameStarted = true;
     const typeQuestion = this.gameModel.questions[this.gameModel.level - 1].type;
     let template;
@@ -150,7 +150,5 @@ export default class MainGamePage {
         break;
     }
     return template;
-  }
-  bind() {
   }
 }

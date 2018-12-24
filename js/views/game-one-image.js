@@ -1,6 +1,6 @@
-import listStats from './game-indicators';
+import gameIndicators from './game-indicators';
 import {QuestionNums, AnswerType} from '../constants.js';
-import AbstractView from '../AbstractView.js';
+import AbstractView from '../abstract-view.js';
 
 export default class GameOneImage extends AbstractView {
   constructor(game, header) {
@@ -27,7 +27,7 @@ export default class GameOneImage extends AbstractView {
           </label>
           </div>
       </form>
-      ${listStats(this.game)}
+      ${gameIndicators(this.game)}
       </section>`;
   }
 
@@ -41,6 +41,4 @@ export default class GameOneImage extends AbstractView {
       }, false);
     });
   }
-
-  onGetAnswers() {}
 }

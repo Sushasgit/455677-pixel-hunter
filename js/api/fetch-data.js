@@ -1,4 +1,4 @@
-import App from '../App.js';
+import App from '../app.js';
 import {SERVER_URL, APPLICATION_ID} from '../constants.js';
 const toJSON = (res) => res.json();
 

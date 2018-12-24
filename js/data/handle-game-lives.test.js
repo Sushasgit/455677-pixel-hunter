@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {handleLivesGame} from './game-lifes.js';
+import {handleLivesGame} from './handle-game-lives.js';
 
 import {INITIAL_GAME} from '../constants.js';
 
