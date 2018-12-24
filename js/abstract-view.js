@@ -1,6 +1,6 @@
 class AbstractView {
   constructor() {
-    this.el = null;
+    this._el = null;
   }
 
   get template() {
@@ -8,15 +8,15 @@ class AbstractView {
   }
 
   get element() {
-    if (!this.el) {
+    if (!this._el) {
       this.render();
       this.bind();
     }
-    return this.el;
+    return this._el;
   }
   render() {
-    this.el = document.createElement(`div`);
-    this.el.innerHTML = this.template;
+    this._el = document.createElement(`div`);
+    this._el.innerHTML = this.template;
   }
 
   bind() { }

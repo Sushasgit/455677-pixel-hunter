@@ -1,10 +1,9 @@
-import AbstractView from '../AbstractView';
-import Header from './gameHeader.js';
+import AbstractView from '../abstract-view';
+import GameHeader from './game-header.js';
 
 export default class RulesView extends AbstractView {
-  constructor(gameModel) {
+  constructor() {
     super();
-    this.game = gameModel;
   }
   get template() {
     return `
@@ -31,7 +30,7 @@ export default class RulesView extends AbstractView {
     const playBtn = this.element.querySelector(`.rules__button`);
     const inputName = this.element.querySelector(`.rules__input`);
     const ruleForm = this.element.querySelector(`.rules__form`);
-    const header = new Header(0);
+    const header = new GameHeader(0);
 
     this.element.insertBefore(header.element, this.element.firstElementChild);
     inputName.addEventListener(`keyup`, () => {

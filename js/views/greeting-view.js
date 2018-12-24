@@ -1,4 +1,4 @@
-import AbstractView from '../AbstractView';
+import AbstractView from '../abstract-view';
 
 export default class GreetingView extends AbstractView {
   get template() {
@@ -45,5 +45,4 @@ export default class GreetingView extends AbstractView {
       this.onClickNext();
     });
   }
-  onClickNext() {}
 }

@@ -1,26 +1,25 @@
 import {changeScreen} from './utils.js';
-import IntroPage from './pages/introduction.js';
-import GreetingPage from './pages/greeting.js';
-import RulesPage from './pages/rules.js';
-import StatsPage from './pages/statistic.js';
+import IntroductionPage from './pages/introduction-page.js';
+import GreetingPage from './pages/greeting-page.js';
+import RulesPage from './pages/rules-page.js';
+import StatisticsPage from './pages/statistics-page.js';
 import ConfirmModal from './views/confirm-modal.js';
-import GameModel from './GameModal.js';
-import FetchData from './api/FetshData.js';
+import GameModel from './game-model.js';
+import FetchData from './api/fetch-data.js';
 import ErrorModal from './views/error-modal.js';
-import MainGamePage from './pages/mainGame.js';
+import MainGamePage from './pages/main-game-page.js';
 
 import {INITIAL_GAME} from './constants.js';
 let currentGame = {};
 
 export default class App {
-
   static showIntroPage() {
     FetchData.loadData()
     .then((questions) => {
       currentGame = Object.assign(INITIAL_GAME, {questions});
     })
     .then(() => {
-      const introPage = new IntroPage();
+      const introPage = new IntroductionPage();
       changeScreen(introPage);
     });
   }
@@ -47,7 +46,7 @@ export default class App {
     .then(() => {
       FetchData.loadStatistic(game.name)
       .then((data)=>{
-        const stats = new StatsPage(data);
+        const stats = new StatisticsPage(data);
         changeScreen(stats);
       });
     });

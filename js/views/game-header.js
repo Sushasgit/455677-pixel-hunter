@@ -1,12 +1,12 @@
-import AbstractView from "../AbstractView";
-import App from '../App.js';
+import AbstractView from "../abstract-view";
+import App from '../app.js';
 import {GameRules} from '../constants.js';
 
 export default class Header extends AbstractView {
   constructor(lives, withTimer, gameStarted, interval) {
     super();
     this.lives = lives;
-    this.withTimer = withTimer;
+    this._withTimer = withTimer;
     this.gameStarted = gameStarted;
     this.interval = interval;
   }
@@ -31,7 +31,7 @@ export default class Header extends AbstractView {
               <use xlink:href="img/sprite.svg#logo-small"></use>
             </svg>
           </button>
-          ${this.withTimer ? `<div class="game__timer"></div>` : ``}
+          ${this._withTimer ? `<div class="game__timer"></div>` : ``}
           ${this.gameStarted ? `<div class="game__lives">${lives}</div` : ``}
         </header>`;
   }

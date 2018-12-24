@@ -1,5 +1,5 @@
 import RulesView from '../views/rules-view.js';
-import App from '../App.js';
+import App from '../app.js';
 
 export default class RulesPage {
   constructor(game) {

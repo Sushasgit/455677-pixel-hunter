@@ -1,9 +1,9 @@
 import {Answer, GameRules} from '../constants.js';
 
-const listStats = (game) => {
+const gameIndicators = (game) => {
   const handleTypeAnswers = (currentGame) => {
     let statisticTemplate;
-    const statsArr = currentGame.answers.map((element) => {
+    const statistics = currentGame.answers.map((element) => {
       if (element.right) {
         switch (element.time) {
           case Answer.NORMAL.time:
@@ -13,7 +13,7 @@ const listStats = (game) => {
             statisticTemplate = `<li class="stats__result stats__result--fast"></li>`;
             break;
           case Answer.SLOW.time:
-            statisticTemplate = ` <li class="stats__result stats__result--slow"></li>`;
+            statisticTemplate = `<li class="stats__result stats__result--slow"></li>`;
             break;
         }
       } else {
@@ -21,7 +21,7 @@ const listStats = (game) => {
       }
       return statisticTemplate;
     });
-    return statsArr;
+    return statistics;
   };
 
   return `<ul class="stats">
@@ -34,4 +34,4 @@ const listStats = (game) => {
     </ul>`;
 };
 
-export default listStats;
+export default gameIndicators;

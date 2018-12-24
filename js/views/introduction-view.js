@@ -1,6 +1,6 @@
-import AbstractView from '../AbstractView';
+import AbstractView from '../abstract-view';
 
-export default class IntroView extends AbstractView {
+export default class IntroductionView extends AbstractView {
   get template() {
     return `
       <section class="intro">
