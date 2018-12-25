@@ -3,10 +3,10 @@ import App from '../app.js';
 
 export default class IntroductionPage {
   constructor() {
-    this.introPage = new IntroductionView();
-    this.introPage.onClickNext = () => {
+    this._introView = new IntroductionView();
+    this._introView.onClickNext = () => {
       App.showGreetingPage();
     };
-    return this.introPage.element;
+    return this._introView.element;
   }
 }

@@ -4,7 +4,7 @@ import App from '../app.js';
 export default class ConfirmModal extends AbstractView {
   constructor(interval) {
     super();
-    this.interval = interval;
+    this._interval = interval;
   }
 
   get template() {
@@ -29,7 +29,7 @@ export default class ConfirmModal extends AbstractView {
     const cancelButtons = this.element.querySelectorAll(`.cancel`);
     const body = document.querySelector(`body`);
     confirm.addEventListener(`click`, () => {
-      clearInterval(this.interval);
+      clearInterval(this._interval);
       App.showRulesPage();
       body.removeChild(this.element);
     });

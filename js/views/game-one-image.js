@@ -5,12 +5,12 @@ import AbstractView from '../abstract-view.js';
 export default class GameOneImage extends AbstractView {
   constructor(game, header) {
     super();
-    this.game = game;
-    this.header = header;
+    this._game = game;
+    this._header = header;
   }
 
   get template() {
-    const currentQuestion = this.game.questions[this.game.level - 1];
+    const currentQuestion = this._game.questions[this._game.level - 1];
     return `
     <section class="game">
       <p class="game__task">${currentQuestion.question}</p>
@@ -27,17 +27,17 @@ export default class GameOneImage extends AbstractView {
           </label>
           </div>
       </form>
-      ${gameIndicators(this.game)}
+      ${gameIndicators(this._game)}
       </section>`;
   }
 
   bind() {
-    this.element.insertBefore(this.header.element, this.element.firstElementChild);
+    this.element.insertBefore(this._header.element, this.element.firstElementChild);
     const answerButtons = this.element.querySelectorAll(`.game__oneImage input`);
 
     answerButtons.forEach((radio) => {
       radio.addEventListener(`click`, () => {
-        this.onGetAnswers(radio, this.game.time);
+        this.onGetAnswers(radio, this._game.time);
       }, false);
     });
   }

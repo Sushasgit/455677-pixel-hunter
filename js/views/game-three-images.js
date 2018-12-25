@@ -4,12 +4,12 @@ import AbstractView from '../abstract-view.js';
 export default class GameThreeImages extends AbstractView {
   constructor(game, header) {
     super();
-    this.header = header;
-    this.game = game;
+    this._header = header;
+    this._game = game;
   }
 
   get template() {
-    const currentQuestion = this.game.questions[this.game.level - 1];
+    const currentQuestion = this._game.questions[this._game.level - 1];
     return `
       <section class="game">
       <p class="game__task">${currentQuestion.question}</p>
@@ -24,12 +24,12 @@ export default class GameThreeImages extends AbstractView {
           <img src=${currentQuestion.answers[2].image.url} alt="Option 3" width=${currentQuestion.answers[0].image.width} height=${currentQuestion.answers[0].image.height}>
         </div>
       </form>
-      ${gameIndicators(this.game)}
+      ${gameIndicators(this._game)}
       </section>`;
   }
 
   bind() {
-    this.element.insertBefore(this.header.element, this.element.firstElementChild);
+    this.element.insertBefore(this._header.element, this.element.firstElementChild);
 
     const gameThreeImage = this.element.querySelectorAll(`.game__threeImage`);
     gameThreeImage.forEach((radio) => {

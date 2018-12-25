@@ -8,6 +8,7 @@ export const GameRules = {
   TIME_BLINK_COUNTER: 5,
   GAME_LIVES: 4,
 };
+
 export const INITIAL_GAME = {
   answers: [],
   questions: null,

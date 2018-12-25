@@ -3,10 +3,10 @@ import App from '../app.js';
 
 export default class GreetingPage {
   constructor() {
-    this.greetingPage = new GreetingView();
-    this.greetingPage.onClickNext = () => {
+    this._greetingView = new GreetingView();
+    this._greetingView.onClickNext = () => {
       App.showRulesPage();
     };
-    return this.greetingPage.element;
+    return this._greetingView.element;
   }
 }

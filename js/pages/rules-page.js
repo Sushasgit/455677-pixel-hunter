@@ -3,12 +3,12 @@ import App from '../app.js';
 
 export default class RulesPage {
   constructor(game) {
-    this.game = game;
-    this.rulesPage = new RulesView();
+    this._game = game;
+    this._rulesView = new RulesView();
 
-    this.rulesPage.onSubmit = (name) => {
+    this._rulesView.onSubmit = (name) => {
       App.startGamePage(name);
     };
-    return this.rulesPage.element;
+    return this._rulesView.element;
   }
 }

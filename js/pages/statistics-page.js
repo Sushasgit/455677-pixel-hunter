@@ -2,7 +2,7 @@ import StatsView from '../views/stats-view.js';
 
 export default class StatisticsPage {
   constructor(game) {
-    this.statsPage = new StatsView(game);
-    return this.statsPage.element;
+    this._statsView = new StatsView(game);
+    return this._statsView.element;
   }
 }

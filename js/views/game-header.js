@@ -2,22 +2,22 @@ import AbstractView from "../abstract-view";
 import App from '../app.js';
 import {GameRules} from '../constants.js';
 
-export default class Header extends AbstractView {
+export default class GameHeader extends AbstractView {
   constructor(lives, withTimer, gameStarted, interval) {
     super();
-    this.lives = lives;
+    this._lives = lives;
     this._withTimer = withTimer;
-    this.gameStarted = gameStarted;
-    this.interval = interval;
+    this._gameStarted = gameStarted;
+    this._interval = interval;
   }
 
   get template() {
-    const lives = `
-    <div class="game__lives">
-      ${ this.lives >= 0 ? new Array(3 - this.lives)
+    const _lives = `
+    <div class="game___lives">
+      ${ this._lives >= 0 ? new Array(3 - this._lives)
         .fill(`<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`)
         .join(``) : ``}  
-        ${this.lives > 0 ? new Array(this.lives)
+        ${this._lives > 0 ? new Array(this._lives)
         .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`)
         .join(``) : ``}
     </div>`;
@@ -32,7 +32,7 @@ export default class Header extends AbstractView {
             </svg>
           </button>
           ${this._withTimer ? `<div class="game__timer"></div>` : ``}
-          ${this.gameStarted ? `<div class="game__lives">${lives}</div` : ``}
+          ${this._gameStarted ? `<div class="game___lives">${_lives}</div` : ``}
         </header>`;
   }
 

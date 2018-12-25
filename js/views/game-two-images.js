@@ -5,12 +5,12 @@ import {AnswerType, QuestionNums} from '../constants.js';
 export default class GameTwoImages extends AbstractView {
   constructor(game, header) {
     super();
-    this.header = header;
-    this.game = game;
+    this._header = header;
+    this._game = game;
   }
 
   get template() {
-    const currentQuestion = this.game.questions[this.game.level - 1];
+    const currentQuestion = this._game.questions[this._game.level - 1];
     return `
      <section class="game">
       <p class="game__task">${currentQuestion.question}</p>
@@ -38,14 +38,14 @@ export default class GameTwoImages extends AbstractView {
           </label>
         </div>
       </form>
-      ${gameIndicators(this.game)}
+      ${gameIndicators(this._game)}
     </section>`;
   }
 
   bind() {
     const radiosButtons = this.element.querySelectorAll(`.game__twoImage input`);
 
-    this.element.insertBefore(this.header.element, this.element.firstElementChild);
+    this.element.insertBefore(this._header.element, this.element.firstElementChild);
 
     radiosButtons.forEach((radio) => {
       radio.addEventListener(`change`, () => {
@@ -61,7 +61,7 @@ export default class GameTwoImages extends AbstractView {
       answer[answerGroup] = question;
       if (answer.hasOwnProperty(QuestionNums.FIRST) && answer.hasOwnProperty(QuestionNums.SECOND)) {
         answersTwoImages.push(answer);
-        this.onGetAnswers(answersTwoImages, this.game.time);
+        this.onGetAnswers(answersTwoImages, this._game.time);
       }
     };
   }
