@@ -86,7 +86,7 @@ export default class MainGamePage {
     });
   }
 
-  updateHeader(time) {
+  _updateHeader(time) {
     this._header.updateTime(time);
   }
 
@@ -113,7 +113,7 @@ export default class MainGamePage {
   _startTimer() {
     this._interval = setInterval(() => {
       this._gameModel = this._game.tick();
-      this.updateHeader(this._gameModel.time);
+      this._updateHeader(this._gameModel.time);
       this._checkTimer();
     }, 1000);
   }
