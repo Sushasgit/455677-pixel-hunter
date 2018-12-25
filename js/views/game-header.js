@@ -48,14 +48,14 @@ export default class GameHeader extends AbstractView {
   }
 
   updateInterval(interval) {
-    this.interval = interval;
+    this._interval = interval;
   }
 
   bind() {
     const buttonBack = this.element.querySelector(`button.back`);
     buttonBack.addEventListener(`click`, () => {
-      if (this.gameStarted) {
-        App.showConfirmModal(this.interval);
+      if (this._gameStarted) {
+        App.showConfirmModal(this._interval);
       } else {
         App.showGreetingPage();
       }
